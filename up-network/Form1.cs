@@ -6,5 +6,38 @@ namespace up_network
         {
             InitializeComponent();
         }
+
+        public void Form1_Load(object sender, EventArgs e)
+        {
+            ShowLoginScreen();
+        }
+
+
+        public void ShowScreen(UserControl screen)
+        {
+            PanelMain.Controls.Clear();
+            // код на то, чтобы сделать fill
+            PanelMain.Controls.Add(screen);
+        }
+
+        public void ShowLoginScreen()
+        {
+            LoginPage lp = new LoginPage();
+
+            lp.onAuth += user =>
+            {
+                ShowMainScreen(user);
+            };
+
+            ShowScreen(lp);
+        }
+
+        public void ShowMainScreen(User loggedUser)
+        {
+            MainPage mp = new MainPage();
+            mp.loggedUser = loggedUser;
+
+            ShowScreen(mp);
+        }
     }
 }

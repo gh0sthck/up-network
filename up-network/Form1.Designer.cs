@@ -28,12 +28,32 @@
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
+            PanelMain = new Panel();
+            SuspendLayout();
+            // 
+            // PanelMain
+            // 
+            PanelMain.Dock = DockStyle.Fill;
+            PanelMain.Location = new Point(0, 0);
+            PanelMain.Name = "PanelMain";
+            PanelMain.Size = new Size(1058, 711);
+            PanelMain.TabIndex = 0;
+            // 
+            // Form1
+            // 
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
-            Text = "Form1";
+            ClientSize = new Size(1058, 711);
+            Controls.Add(PanelMain);
+            FormBorderStyle = FormBorderStyle.Fixed3D;
+            Name = "Form1";
+            Text = "Учет оборудования";
+            Load += Form1_Load;
+            ResumeLayout(false);
         }
 
         #endregion
+
+        private Panel PanelMain;
     }
 }
