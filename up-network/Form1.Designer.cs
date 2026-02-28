@@ -35,15 +35,16 @@
             // 
             PanelMain.Dock = DockStyle.Fill;
             PanelMain.Location = new Point(0, 0);
+            PanelMain.Margin = new Padding(0);
             PanelMain.Name = "PanelMain";
-            PanelMain.Size = new Size(1058, 711);
+            PanelMain.Size = new Size(1298, 711);
             PanelMain.TabIndex = 0;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1058, 711);
+            ClientSize = new Size(1298, 711);
             Controls.Add(PanelMain);
             FormBorderStyle = FormBorderStyle.Fixed3D;
             Name = "Form1";

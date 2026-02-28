@@ -18,6 +18,36 @@ namespace up_network
 
         String image;
 
+        public String Name
+        {
+            get { return name; }
+            set { name = value; }
+        }
+
+        public String Description
+        {
+            get { return description; }
+            set { description = value; }
+        }
+
+        public String? Ip
+        {
+            get { return ip; }
+            set { ip = value; }
+        }
+
+        public String Mac
+        {
+            get { return mac; }
+            set { mac = value; }
+        }
+
+        public bool Status
+        {
+            get { return status; }
+            set { status = value; }
+        }
+
         public Device(string name, string description, bool status, string mac, string? ip = null, int lanPorts = 1, int wanPorts = 1, int consolePorts = 1, string image = "")
         {
             this.name = name;

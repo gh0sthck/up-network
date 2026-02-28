@@ -37,6 +37,7 @@
             label2 = new Label();
             label1 = new Label();
             MainUsername = new Label();
+            MainFlowLayout = new FlowLayoutPanel();
             panel1.SuspendLayout();
             NavbarClientsBg.SuspendLayout();
             NavbarTableBg.SuspendLayout();
@@ -146,13 +147,24 @@
             MainUsername.TabIndex = 0;
             MainUsername.Text = "megakrutyfgfo@mail.ru";
             // 
+            // MainFlowLayout
+            // 
+            MainFlowLayout.AutoScroll = true;
+            MainFlowLayout.Location = new Point(265, 85);
+            MainFlowLayout.Margin = new Padding(5);
+            MainFlowLayout.Name = "MainFlowLayout";
+            MainFlowLayout.Padding = new Padding(10);
+            MainFlowLayout.Size = new Size(1033, 626);
+            MainFlowLayout.TabIndex = 1;
+            // 
             // MainPage
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(MainFlowLayout);
             Controls.Add(panel1);
             Name = "MainPage";
-            Size = new Size(1058, 711);
+            Size = new Size(1298, 711);
             Load += MainPage_Load;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
@@ -176,5 +188,6 @@
         private Label label4;
         private Panel NavbarTableBg;
         private Panel NavbarClientsBg;
+        private FlowLayoutPanel MainFlowLayout;
     }
 }
