@@ -37,7 +37,33 @@ namespace up_network
             MainPage mp = new MainPage();
             mp.loggedUser = loggedUser;
 
+            mp.onExit += () =>
+            {
+                ShowLoginScreen();
+            };
+            mp.onTableClick += () =>
+            {
+                ShowTablePage(mp.loggedUser);
+            };
+
             ShowScreen(mp);
+        }
+
+        public void ShowTablePage(User loggedUser)
+        {
+            TablePage tp = new TablePage();
+            tp.loggedUser = loggedUser;
+
+            tp.onExit += () =>
+            {
+                ShowLoginScreen();
+            };
+            tp.onMainClick += () =>
+            {
+                ShowMainScreen(tp.loggedUser);
+            };
+
+            ShowScreen(tp);
         }
     }
 }

@@ -11,6 +11,8 @@ namespace up_network
     public partial class MainPage : UserControl
     {
         public User loggedUser;
+        public event Action onExit;
+        public event Action onTableClick;
         List<Device> devices;
 
         public MainPage()
@@ -56,6 +58,16 @@ namespace up_network
         private void NavbarClientsBg_MouseLeave(object sender, EventArgs e)
         {
             NavbarClientsBg.BackColor = Color.FromArgb(100, 171, 251);
+        }
+
+        private void MainExitButton_Click(object sender, EventArgs e)
+        {
+            onExit?.Invoke();
+        }
+
+        private void NavbarTableBg_Click(object sender, EventArgs e)
+        {
+            onTableClick?.Invoke();
         }
     }
 }

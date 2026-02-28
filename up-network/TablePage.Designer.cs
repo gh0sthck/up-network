@@ -1,6 +1,6 @@
 ﻿namespace up_network
 {
-    partial class MainPage
+    partial class TablePage
     {
         /// <summary> 
         /// Required designer variable.
@@ -34,15 +34,15 @@
             label4 = new Label();
             NavbarTableBg = new Panel();
             label3 = new Label();
-            NavbarDevicesBg = new Panel();
+            NavbarMainBg = new Panel();
             label2 = new Label();
             label1 = new Label();
             MainUsername = new Label();
-            MainFlowLayout = new FlowLayoutPanel();
+            TableFlowLayout = new FlowLayoutPanel();
             panel1.SuspendLayout();
             NavbarClientsBg.SuspendLayout();
             NavbarTableBg.SuspendLayout();
-            NavbarDevicesBg.SuspendLayout();
+            NavbarMainBg.SuspendLayout();
             SuspendLayout();
             // 
             // panel1
@@ -51,13 +51,13 @@
             panel1.Controls.Add(MainExitButton);
             panel1.Controls.Add(NavbarClientsBg);
             panel1.Controls.Add(NavbarTableBg);
-            panel1.Controls.Add(NavbarDevicesBg);
+            panel1.Controls.Add(NavbarMainBg);
             panel1.Controls.Add(label1);
             panel1.Controls.Add(MainUsername);
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
             panel1.Size = new Size(262, 711);
-            panel1.TabIndex = 0;
+            panel1.TabIndex = 1;
             // 
             // MainExitButton
             // 
@@ -90,20 +90,17 @@
             label4.Size = new Size(92, 24);
             label4.TabIndex = 3;
             label4.Text = "Клиенты";
-            label4.MouseLeave += NavbarTableBg_MouseLeave;
+            label4.MouseLeave += NavbarClientsBg_MouseLeave;
             label4.MouseHover += NavbarClientsBg_MouseHover;
             // 
             // NavbarTableBg
             // 
-            NavbarTableBg.BackColor = Color.FromArgb(100, 171, 251);
+            NavbarTableBg.BackColor = Color.FromArgb(35, 137, 250);
             NavbarTableBg.Controls.Add(label3);
             NavbarTableBg.Location = new Point(0, 254);
             NavbarTableBg.Name = "NavbarTableBg";
             NavbarTableBg.Size = new Size(262, 70);
             NavbarTableBg.TabIndex = 4;
-            NavbarTableBg.Click += NavbarTableBg_Click;
-            NavbarTableBg.MouseLeave += NavbarTableBg_MouseLeave;
-            NavbarTableBg.MouseHover += NavbarTableBg_MouseHover;
             // 
             // label3
             // 
@@ -115,17 +112,18 @@
             label3.Size = new Size(169, 24);
             label3.TabIndex = 1;
             label3.Text = "Сетевая таблица";
-            label3.MouseLeave += NavbarTableBg_MouseLeave;
-            label3.MouseHover += NavbarTableBg_MouseHover;
             // 
-            // NavbarDevicesBg
+            // NavbarMainBg
             // 
-            NavbarDevicesBg.BackColor = Color.FromArgb(35, 137, 250);
-            NavbarDevicesBg.Controls.Add(label2);
-            NavbarDevicesBg.Location = new Point(0, 184);
-            NavbarDevicesBg.Name = "NavbarDevicesBg";
-            NavbarDevicesBg.Size = new Size(262, 70);
-            NavbarDevicesBg.TabIndex = 2;
+            NavbarMainBg.BackColor = Color.FromArgb(100, 171, 251);
+            NavbarMainBg.Controls.Add(label2);
+            NavbarMainBg.Location = new Point(0, 184);
+            NavbarMainBg.Name = "NavbarMainBg";
+            NavbarMainBg.Size = new Size(262, 70);
+            NavbarMainBg.TabIndex = 2;
+            NavbarMainBg.Click += NavbarMainBg_Click;
+            NavbarMainBg.MouseLeave += NavbarMainBg_MouseLeave;
+            NavbarMainBg.MouseHover += NavbarMainBg_MouseHover;
             // 
             // label2
             // 
@@ -137,6 +135,8 @@
             label2.Size = new Size(153, 24);
             label2.TabIndex = 0;
             label2.Text = "Оборудование";
+            label2.MouseLeave += NavbarMainBg_MouseLeave;
+            label2.MouseHover += NavbarMainBg_MouseHover;
             // 
             // label1
             // 
@@ -160,48 +160,49 @@
             MainUsername.TabIndex = 0;
             MainUsername.Text = "megakrutyfgfo@mail.ru";
             // 
-            // MainFlowLayout
+            // TableFlowLayout
             // 
-            MainFlowLayout.AutoScroll = true;
-            MainFlowLayout.Location = new Point(265, 85);
-            MainFlowLayout.Margin = new Padding(5);
-            MainFlowLayout.Name = "MainFlowLayout";
-            MainFlowLayout.Padding = new Padding(10);
-            MainFlowLayout.Size = new Size(1033, 626);
-            MainFlowLayout.TabIndex = 1;
+            TableFlowLayout.AutoScroll = true;
+            TableFlowLayout.FlowDirection = FlowDirection.TopDown;
+            TableFlowLayout.Location = new Point(265, 98);
+            TableFlowLayout.Margin = new Padding(0);
+            TableFlowLayout.Name = "TableFlowLayout";
+            TableFlowLayout.Size = new Size(1005, 601);
+            TableFlowLayout.TabIndex = 2;
+            TableFlowLayout.WrapContents = false;
             // 
-            // MainPage
+            // TablePage
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            Controls.Add(MainFlowLayout);
+            Controls.Add(TableFlowLayout);
             Controls.Add(panel1);
-            Name = "MainPage";
+            Name = "TablePage";
             Size = new Size(1298, 711);
-            Load += MainPage_Load;
+            Load += TablePage_Load;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             NavbarClientsBg.ResumeLayout(false);
             NavbarClientsBg.PerformLayout();
             NavbarTableBg.ResumeLayout(false);
             NavbarTableBg.PerformLayout();
-            NavbarDevicesBg.ResumeLayout(false);
-            NavbarDevicesBg.PerformLayout();
+            NavbarMainBg.ResumeLayout(false);
+            NavbarMainBg.PerformLayout();
             ResumeLayout(false);
         }
 
         #endregion
 
         private Panel panel1;
-        private Label MainUsername;
-        private Label label1;
-        private Panel NavbarDevicesBg;
-        private Label label2;
-        private Label label3;
+        private Button MainExitButton;
+        private Panel NavbarClientsBg;
         private Label label4;
         private Panel NavbarTableBg;
-        private Panel NavbarClientsBg;
-        private FlowLayoutPanel MainFlowLayout;
-        private Button MainExitButton;
+        private Label label3;
+        private Panel NavbarMainBg;
+        private Label label2;
+        private Label label1;
+        private Label MainUsername;
+        private FlowLayoutPanel TableFlowLayout;
     }
 }

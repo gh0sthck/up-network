@@ -42,7 +42,6 @@ namespace up_network
             {
                 if (user.Login == enteredLogin && user.Password == enteredPassword)
                 {
-                    MessageBox.Show("Вы вошли!");
                     onAuth?.Invoke(user);
                     return;
                 }

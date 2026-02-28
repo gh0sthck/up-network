@@ -13,5 +13,11 @@
     <Compile Update="MainPage.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Update="TableCard.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="TablePage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
   </ItemGroup>
 </Project>

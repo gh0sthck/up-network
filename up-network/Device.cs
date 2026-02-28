@@ -16,6 +16,8 @@ namespace up_network
         int wanPorts;
         int consolePorts;
 
+        String? vlan;
+
         String image;
 
         public String Name
@@ -48,7 +50,13 @@ namespace up_network
             set { status = value; }
         }
 
-        public Device(string name, string description, bool status, string mac, string? ip = null, int lanPorts = 1, int wanPorts = 1, int consolePorts = 1, string image = "")
+        public String Vlan
+        {
+            get { return vlan; }
+            set { vlan = value; }
+        }
+
+        public Device(string name, string description, bool status, string mac, string? ip = null, string? vlan = null, int lanPorts = 1, int wanPorts = 1, int consolePorts = 1, string image = "")
         {
             this.name = name;
             this.description = description;
