@@ -120,7 +120,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.FromArgb(235, 235, 235);
+            BackColor = Color.FromArgb(231, 231, 231);
             Controls.Add(DevCardIP);
             Controls.Add(DevCardMAC);
             Controls.Add(DevCardStatus);

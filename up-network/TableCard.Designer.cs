@@ -61,6 +61,7 @@
             TableCardMAC.Size = new Size(240, 24);
             TableCardMAC.TabIndex = 2;
             TableCardMAC.Text = "fe80::b1e0:f544:abf3:e318";
+            TableCardMAC.Click += TableCardMAC_Click;
             // 
             // TableCardIP
             // 

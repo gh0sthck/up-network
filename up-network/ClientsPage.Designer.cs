@@ -175,6 +175,7 @@
             ClientFlowLayout.Name = "ClientFlowLayout";
             ClientFlowLayout.Size = new Size(1019, 624);
             ClientFlowLayout.TabIndex = 2;
+            ClientFlowLayout.WrapContents = false;
             // 
             // ClientsNameFilter
             // 

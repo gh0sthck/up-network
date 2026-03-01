@@ -39,6 +39,7 @@
             label1 = new Label();
             MainUsername = new Label();
             TableFlowLayout = new FlowLayoutPanel();
+            TableVlanFilter = new ComboBox();
             panel1.SuspendLayout();
             NavbarClientsBg.SuspendLayout();
             NavbarTableBg.SuspendLayout();
@@ -174,10 +175,19 @@
             TableFlowLayout.TabIndex = 2;
             TableFlowLayout.WrapContents = false;
             // 
+            // TableVlanFilter
+            // 
+            TableVlanFilter.FormattingEnabled = true;
+            TableVlanFilter.Location = new Point(706, 57);
+            TableVlanFilter.Name = "TableVlanFilter";
+            TableVlanFilter.Size = new Size(192, 23);
+            TableVlanFilter.TabIndex = 3;
+            // 
             // TablePage
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(TableVlanFilter);
             Controls.Add(TableFlowLayout);
             Controls.Add(panel1);
             Name = "TablePage";
@@ -207,5 +217,6 @@
         private Label label1;
         private Label MainUsername;
         private FlowLayoutPanel TableFlowLayout;
+        private ComboBox TableVlanFilter;
     }
 }

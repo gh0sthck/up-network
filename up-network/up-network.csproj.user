@@ -4,6 +4,9 @@
     <Compile Update="ClientCard.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Update="ClientCardDeviceForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="ClientsPage.cs">
       <SubType>UserControl</SubType>
     </Compile>

@@ -14,10 +14,11 @@ namespace up_network
         public event Action onExit;
         public event Action onMainClick;
         public event Action onClientsClick;
-        List <Device> devices = new List<Device>();
+        DatabaseController db;
 
         public TablePage()
         {
+            db = new DatabaseController();
             InitializeComponent();
         }
         private void NavbarMainBg_MouseHover(object sender, EventArgs e)
@@ -55,22 +56,29 @@ namespace up_network
             onClientsClick?.Invoke();
         }
 
+        private void InsertDeviceList(List<Device> devices)
+        {
+            TableFlowLayout.Controls.Clear();
+            foreach (Device device in devices)
+            {
+                var card = new TableCard();
+                card.currentDevice = device;
+                TableFlowLayout.Controls.Add(card);
+            }
+        }
+
         private void TablePage_Load(object sender, EventArgs e)
         {
             MainUsername.Text = loggedUser.Login.ToString();
 
-            devices.Add(new Device("Коммутатор CISCO", "ул. Проспект Мира, к.3, д.16", true, "fd01::423b:f0c0:30ed:b73e", "192.168.0.1"));
-            devices.Add(new Device("Коммутатор qTech", "ул. б. Переяславская,  д.16", true, "fd01::423b:f0c0:30ed:b73e", "10.177.4.123"));
-            devices.Add(new Device("D-Link DGS-1008A", "ул. Космонавтов, к.4, д.12", true, "fd01::423b:f0c0:30ed:b73e", "10.177.4.111"));
-            devices.Add(new Device("Zyxel GS1900-24E", "ул. Проспект Мира, к.3, д.16", true, "fd01::423b:f0c0:30ed:b73e"));
-            devices.Add(new Device("TP-Link TL-SG1008P", "ул. Космонавтов, д.11", true, "fd01::423b:f0c0:30ed:b73e"));
-
-            for (int i = 0; i < devices.Count; i++)
+            foreach (string val in db.GetVlanList())
             {
-                TableCard card = new TableCard();
-                card.currentDeivce = devices[i];
-                TableFlowLayout.Controls.Add(card);
+                TableVlanFilter.Items.Add(val);
             }
+            TableVlanFilter.SelectedIndex = 0;
+
+
+            InsertDeviceList(db.GetAllDevicesByName());
         }
     }
 }

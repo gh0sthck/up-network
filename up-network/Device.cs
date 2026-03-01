@@ -50,7 +50,7 @@ namespace up_network
             set { status = value; }
         }
 
-        public String Vlan
+        public String? Vlan
         {
             get { return vlan; }
             set { vlan = value; }
@@ -63,6 +63,7 @@ namespace up_network
             this.status = status;
             this.mac = mac;
             this.ip = ip;
+            this.vlan = vlan;
             this.lanPorts = lanPorts;
             this.wanPorts = wanPorts;
             this.consolePorts = consolePorts;

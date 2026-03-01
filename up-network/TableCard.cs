@@ -11,7 +11,7 @@ namespace up_network
 {
     public partial class TableCard : UserControl
     {
-        public Device currentDeivce;
+        public Device currentDevice;
 
         public TableCard()
         {
@@ -31,10 +31,11 @@ namespace up_network
 
             TableCardStatus.Region = new Region(path);
 
-            TableCardMAC.Text = currentDeivce.Mac;
-            TableCardIP.Text = currentDeivce.Ip;
-            TableCardVLAN.Text = currentDeivce.Vlan;
-            if (currentDeivce.Status)
+            TableCardMAC.Text = currentDevice.Mac;
+            TableCardIP.Text = currentDevice.Ip;
+            TableCardVLAN.Text = currentDevice.Vlan?.ToString();
+
+            if (currentDevice.Status)
             {
                 TableCardStatus.BackColor = Color.Green;
             }
@@ -42,6 +43,13 @@ namespace up_network
             {
                 TableCardStatus.BackColor = Color.Red;
             }
+        }
+
+        private void TableCardMAC_Click(object sender, EventArgs e)
+        {
+            ClientCardDeviceForm cardForm = new ClientCardDeviceForm();
+            cardForm.device = currentDevice;
+            cardForm.Show();
         }
     }
 }

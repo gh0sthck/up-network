@@ -15,9 +15,11 @@ namespace up_network
         public event Action onTableClick;
         public event Action onClientsClick;
         List<Device> devices;
+        DatabaseController db;
 
         public MainPage()
         {
+            db = new DatabaseController();
             InitializeComponent();
         }
 
@@ -35,17 +37,8 @@ namespace up_network
         private void MainPage_Load(object sender, EventArgs e)
         {
             MainUsername.Text = loggedUser.Login.ToString();
-            devices = new List<Device>();
-            devices.Add(new Device("Коммутатор CISCO", "ул. Проспект Мира, к.3, д.16", true, "fd01::423b:f0c0:30ed:b73e"));
-            devices.Add(new Device("Коммутатор qTech", "ул. б. Переяславская,  д.16", false, "fd01::423b:f0c0:30ed:b73e"));
-            devices.Add(new Device("D-Link DGS-1008A", "ул. Космонавтов, к.4, д.12", true, "fd01::423b:f0c0:30ed:b73e"));
-            devices.Add(new Device("Zyxel GS1900-24E", "ул. Проспект Мира, к.3, д.16", true, "fd01::423b:f0c0:30ed:b73e"));
-            devices.Add(new Device("TP-Link TL-1P", "ул. Космонавтов, д.11", false, "fd01::423b:f0c0:30ed:b73e"));
-            devices.Add(new Device("TP-Link TL-2P", "ул. Космонавтов, д.11", false, "fd01::423b:f0c0:30ed:b73e"));
-            devices.Add(new Device("TP-Link TL-3P", "ул. Космонавтов, д.11", true, "fd01::423b:f0c0:30ed:b73e"));
-            devices.Add(new Device("TP-Link TL-4P", "ул. Космонавтов, д.11", false, "fd01::423b:f0c0:30ed:b73e"));
 
-            InsertDeviceList(devices);
+            InsertDeviceList(db.GetAllDevicesByName());
 
             MainFilterBox.Items.Add("По названию");
             MainFilterBox.Items.Add("По IP");
@@ -59,11 +52,12 @@ namespace up_network
 
         private void FilterBox_Changed(object sender, EventArgs e)
         {
+            // return db.GetSmthDevice();
             string state = MainFilterBox.SelectedIndex.ToString();
             List<Device> dv = new List<Device>();
             if (state == "3")
             {
-                foreach (var device in devices)
+                foreach (var device in db.GetAllDevicesByName())
                 {
                     if (device.Status)
                     {
@@ -72,7 +66,7 @@ namespace up_network
                 }
             } else if (state == "4")
             {
-                foreach (var dev in devices)
+                foreach (var dev in db.GetAllDevicesByName())
                 {
                     if (!(dev.Status))
                     {
