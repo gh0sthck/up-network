@@ -45,6 +45,10 @@ namespace up_network
             {
                 ShowTablePage(mp.loggedUser);
             };
+            mp.onClientsClick += () =>
+            {
+                ShowClientsPage(mp.loggedUser);
+            };
 
             ShowScreen(mp);
         }
@@ -62,8 +66,33 @@ namespace up_network
             {
                 ShowMainScreen(tp.loggedUser);
             };
+            tp.onClientsClick += () =>
+            {
+                ShowClientsPage(tp.loggedUser);
+            };
 
             ShowScreen(tp);
+        }
+
+        public void ShowClientsPage(User loggedUser)
+        {
+            ClientsPage cp = new ClientsPage();
+            cp.loggedUser = loggedUser;
+
+            cp.onExit += () =>
+            {
+                ShowLoginScreen();
+            };
+            cp.onTableClick += () =>
+            {
+                ShowTablePage(cp.loggedUser);
+            };
+            cp.onMainClick += () =>
+            {
+                ShowMainScreen(cp.loggedUser);
+            };
+
+            ShowScreen(cp);
         }
     }
 }

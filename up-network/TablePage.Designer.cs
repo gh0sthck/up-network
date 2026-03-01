@@ -77,6 +77,7 @@
             NavbarClientsBg.Name = "NavbarClientsBg";
             NavbarClientsBg.Size = new Size(262, 70);
             NavbarClientsBg.TabIndex = 5;
+            NavbarClientsBg.Click += NavbarClientsBg_Click;
             NavbarClientsBg.MouseLeave += NavbarClientsBg_MouseLeave;
             NavbarClientsBg.MouseHover += NavbarClientsBg_MouseHover;
             // 
@@ -90,6 +91,7 @@
             label4.Size = new Size(92, 24);
             label4.TabIndex = 3;
             label4.Text = "Клиенты";
+            label4.Click += NavbarClientsBg_Click;
             label4.MouseLeave += NavbarClientsBg_MouseLeave;
             label4.MouseHover += NavbarClientsBg_MouseHover;
             // 
@@ -135,6 +137,7 @@
             label2.Size = new Size(153, 24);
             label2.TabIndex = 0;
             label2.Text = "Оборудование";
+            label2.Click += NavbarMainBg_Click;
             label2.MouseLeave += NavbarMainBg_MouseLeave;
             label2.MouseHover += NavbarMainBg_MouseHover;
             // 

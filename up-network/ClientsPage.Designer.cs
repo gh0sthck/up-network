@@ -1,6 +1,6 @@
 ﻿namespace up_network
 {
-    partial class MainPage
+    partial class ClientsPage
     {
         /// <summary> 
         /// Required designer variable.
@@ -38,9 +38,6 @@
             label2 = new Label();
             label1 = new Label();
             MainUsername = new Label();
-            MainFlowLayout = new FlowLayoutPanel();
-            MainFilterBox = new ComboBox();
-            label5 = new Label();
             panel1.SuspendLayout();
             NavbarClientsBg.SuspendLayout();
             NavbarTableBg.SuspendLayout();
@@ -59,7 +56,7 @@
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
             panel1.Size = new Size(262, 711);
-            panel1.TabIndex = 0;
+            panel1.TabIndex = 1;
             // 
             // MainExitButton
             // 
@@ -73,15 +70,12 @@
             // 
             // NavbarClientsBg
             // 
-            NavbarClientsBg.BackColor = Color.FromArgb(100, 171, 251);
+            NavbarClientsBg.BackColor = Color.FromArgb(35, 137, 250);
             NavbarClientsBg.Controls.Add(label4);
             NavbarClientsBg.Location = new Point(0, 324);
             NavbarClientsBg.Name = "NavbarClientsBg";
             NavbarClientsBg.Size = new Size(262, 70);
             NavbarClientsBg.TabIndex = 5;
-            NavbarClientsBg.Click += NavbarClientsBg_Click;
-            NavbarClientsBg.MouseLeave += NavbarClientsBg_MouseLeave;
-            NavbarClientsBg.MouseHover += NavbarClientsBg_MouseHover;
             // 
             // label4
             // 
@@ -93,9 +87,6 @@
             label4.Size = new Size(92, 24);
             label4.TabIndex = 3;
             label4.Text = "Клиенты";
-            label4.Click += NavbarClientsBg_Click;
-            label4.MouseLeave += NavbarTableBg_MouseLeave;
-            label4.MouseHover += NavbarClientsBg_MouseHover;
             // 
             // NavbarTableBg
             // 
@@ -125,12 +116,15 @@
             // 
             // NavbarDevicesBg
             // 
-            NavbarDevicesBg.BackColor = Color.FromArgb(35, 137, 250);
+            NavbarDevicesBg.BackColor = Color.FromArgb(100, 171, 251);
             NavbarDevicesBg.Controls.Add(label2);
             NavbarDevicesBg.Location = new Point(0, 184);
             NavbarDevicesBg.Name = "NavbarDevicesBg";
             NavbarDevicesBg.Size = new Size(262, 70);
             NavbarDevicesBg.TabIndex = 2;
+            NavbarDevicesBg.Click += NavbarMainBg_Click;
+            NavbarDevicesBg.MouseLeave += NavbarDevicesBg_MouseLeave;
+            NavbarDevicesBg.MouseHover += NavbarDevicesBg_MouseHover;
             // 
             // label2
             // 
@@ -142,6 +136,9 @@
             label2.Size = new Size(153, 24);
             label2.TabIndex = 0;
             label2.Text = "Оборудование";
+            label2.Click += NavbarMainBg_Click;
+            label2.MouseLeave += NavbarDevicesBg_MouseLeave;
+            label2.MouseHover += NavbarDevicesBg_MouseHover;
             // 
             // label1
             // 
@@ -165,46 +162,14 @@
             MainUsername.TabIndex = 0;
             MainUsername.Text = "megakrutyfgfo@mail.ru";
             // 
-            // MainFlowLayout
-            // 
-            MainFlowLayout.AutoScroll = true;
-            MainFlowLayout.Location = new Point(265, 85);
-            MainFlowLayout.Margin = new Padding(5);
-            MainFlowLayout.Name = "MainFlowLayout";
-            MainFlowLayout.Padding = new Padding(10);
-            MainFlowLayout.Size = new Size(1033, 626);
-            MainFlowLayout.TabIndex = 1;
-            // 
-            // MainFilterBox
-            // 
-            MainFilterBox.Font = new Font("Geometria", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            MainFilterBox.FormattingEnabled = true;
-            MainFilterBox.Location = new Point(391, 42);
-            MainFilterBox.Name = "MainFilterBox";
-            MainFilterBox.Size = new Size(192, 28);
-            MainFilterBox.TabIndex = 2;
-            // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Font = new Font("Geometria", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            label5.Location = new Point(265, 45);
-            label5.Name = "label5";
-            label5.Size = new Size(120, 20);
-            label5.TabIndex = 3;
-            label5.Text = "Фильтровать:";
-            // 
-            // MainPage
+            // ClientsPage
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            Controls.Add(label5);
-            Controls.Add(MainFilterBox);
-            Controls.Add(MainFlowLayout);
             Controls.Add(panel1);
-            Name = "MainPage";
+            Name = "ClientsPage";
             Size = new Size(1298, 711);
-            Load += MainPage_Load;
+            Load += ClientsPage_Load;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             NavbarClientsBg.ResumeLayout(false);
@@ -214,23 +179,19 @@
             NavbarDevicesBg.ResumeLayout(false);
             NavbarDevicesBg.PerformLayout();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
 
         private Panel panel1;
-        private Label MainUsername;
-        private Label label1;
-        private Panel NavbarDevicesBg;
-        private Label label2;
-        private Label label3;
+        private Button MainExitButton;
+        private Panel NavbarClientsBg;
         private Label label4;
         private Panel NavbarTableBg;
-        private Panel NavbarClientsBg;
-        private FlowLayoutPanel MainFlowLayout;
-        private Button MainExitButton;
-        private ComboBox MainFilterBox;
-        private Label label5;
+        private Label label3;
+        private Panel NavbarDevicesBg;
+        private Label label2;
+        private Label label1;
+        private Label MainUsername;
     }
 }

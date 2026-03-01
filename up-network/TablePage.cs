@@ -13,13 +13,12 @@ namespace up_network
         public User loggedUser;
         public event Action onExit;
         public event Action onMainClick;
-        List<Device> devices = new List<Device>();
+        public event Action onClientsClick;
+        List <Device> devices = new List<Device>();
 
         public TablePage()
         {
             InitializeComponent();
-            
-            //MainUsername.Text = loggedUser.Login.ToString();
         }
         private void NavbarMainBg_MouseHover(object sender, EventArgs e)
         {
@@ -51,8 +50,14 @@ namespace up_network
             onMainClick?.Invoke();
         }
 
+        private void NavbarClientsBg_Click(Object sender, EventArgs e)
+        {
+            onClientsClick?.Invoke();
+        }
+
         private void TablePage_Load(object sender, EventArgs e)
         {
+            MainUsername.Text = loggedUser.Login.ToString();
 
             devices.Add(new Device("Коммутатор CISCO", "ул. Проспект Мира, к.3, д.16", true, "fd01::423b:f0c0:30ed:b73e", "192.168.0.1"));
             devices.Add(new Device("Коммутатор qTech", "ул. б. Переяславская,  д.16", true, "fd01::423b:f0c0:30ed:b73e", "10.177.4.123"));
