@@ -38,6 +38,10 @@
             label2 = new Label();
             label1 = new Label();
             MainUsername = new Label();
+            ClientFlowLayout = new FlowLayoutPanel();
+            ClientsNameFilter = new ComboBox();
+            ClientsContractFilter = new ComboBox();
+            ClientsDeviceFilter = new ComboBox();
             panel1.SuspendLayout();
             NavbarClientsBg.SuspendLayout();
             NavbarTableBg.SuspendLayout();
@@ -162,10 +166,48 @@
             MainUsername.TabIndex = 0;
             MainUsername.Text = "megakrutyfgfo@mail.ru";
             // 
+            // ClientFlowLayout
+            // 
+            ClientFlowLayout.AutoScroll = true;
+            ClientFlowLayout.FlowDirection = FlowDirection.TopDown;
+            ClientFlowLayout.Location = new Point(268, 75);
+            ClientFlowLayout.Margin = new Padding(0);
+            ClientFlowLayout.Name = "ClientFlowLayout";
+            ClientFlowLayout.Size = new Size(1019, 624);
+            ClientFlowLayout.TabIndex = 2;
+            // 
+            // ClientsNameFilter
+            // 
+            ClientsNameFilter.FormattingEnabled = true;
+            ClientsNameFilter.Location = new Point(317, 40);
+            ClientsNameFilter.Name = "ClientsNameFilter";
+            ClientsNameFilter.Size = new Size(157, 23);
+            ClientsNameFilter.TabIndex = 3;
+            // 
+            // ClientsContractFilter
+            // 
+            ClientsContractFilter.FormattingEnabled = true;
+            ClientsContractFilter.Location = new Point(868, 40);
+            ClientsContractFilter.Name = "ClientsContractFilter";
+            ClientsContractFilter.Size = new Size(157, 23);
+            ClientsContractFilter.TabIndex = 4;
+            // 
+            // ClientsDeviceFilter
+            // 
+            ClientsDeviceFilter.FormattingEnabled = true;
+            ClientsDeviceFilter.Location = new Point(1058, 40);
+            ClientsDeviceFilter.Name = "ClientsDeviceFilter";
+            ClientsDeviceFilter.Size = new Size(157, 23);
+            ClientsDeviceFilter.TabIndex = 5;
+            // 
             // ClientsPage
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(ClientsDeviceFilter);
+            Controls.Add(ClientsContractFilter);
+            Controls.Add(ClientsNameFilter);
+            Controls.Add(ClientFlowLayout);
             Controls.Add(panel1);
             Name = "ClientsPage";
             Size = new Size(1298, 711);
@@ -193,5 +235,9 @@
         private Label label2;
         private Label label1;
         private Label MainUsername;
+        private FlowLayoutPanel ClientFlowLayout;
+        private ComboBox ClientsNameFilter;
+        private ComboBox ClientsContractFilter;
+        private ComboBox ClientsDeviceFilter;
     }
 }
