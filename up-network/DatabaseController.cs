@@ -1,15 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SQLite;
 using System.Text;
 
 namespace up_network
 {
     internal class DatabaseController
     {
-        string connectionString;
+        private readonly string connectionString;
+        private SQLiteConnection connection;
+        private SQLiteCommand command;
+        
         public DatabaseController() 
         {
-            connectionString = "";
+            //MessageBox.Show(Environment.CurrentDirectory);
+            connectionString = $"Data Source = " + Environment.CurrentDirectory + @"\data.db; Version = 3;";
+            
         }
 
         private List<Device> GetFoobarDevices()
@@ -49,12 +55,90 @@ namespace up_network
 
         public List<Device> GetAllDevicesByName()
         {
-            return GetFoobarDevices();
+            List<Device> devs = new List<Device>();
+
+            using (connection = new SQLiteConnection(connectionString))
+            {
+                connection.Open();
+                command = new SQLiteCommand();
+                command.CommandText = @"SELECT id, name, description, status, mac, ip, lan_ports, wan_ports, console_ports, vlan, image FROM devices ORDER BY name ASC;";
+                command.Connection = connection;
+
+                var reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+
+                    Device d = new Device(
+                        name: reader["name"].ToString(),
+                        description: reader["description"].ToString(),
+                        status: Boolean.Parse(reader["status"].ToString()),
+                        mac: reader["mac"].ToString(),
+                        ip: reader["ip"]?.ToString(),
+                        lanPorts: int.Parse(reader["lan_ports"].ToString()),
+                        wanPorts: int.Parse(reader["wan_ports"].ToString()),
+                        consolePorts: int.Parse(reader["console_ports"].ToString()),
+                        vlan: reader["vlan"].ToString(), // reader.GetString(9)
+                        image: reader["image"].ToString()
+                    );
+                    if (reader["ip"].ToString() == "")
+                    {
+                        d.Ip = null;
+                    }
+                    if (reader["vlan"].ToString() == "")
+                    {
+                        d.Vlan = null;
+                    }
+
+                    devs.Add(d);
+                }
+
+            }
+
+            return devs;
         }
 
-        public List<Device> GetDevicesByMac()
+        public List<Device> GetDevicesByMac(string mac = "")
         {
-            return GetFoobarDevices();
+            List<Device> devs = new List<Device>();
+
+            using (connection = new SQLiteConnection(connectionString))
+            {
+                connection.Open();
+                command = new SQLiteCommand();
+                command.CommandText = @$"SELECT id, name, description, status, mac, ip, lan_ports, wan_ports, console_ports, vlan, image FROM devices WHERE mac = {mac} ORDER BY name ASC;";
+                command.Connection = connection;
+
+                var reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+
+                    Device d = new Device(
+                        name: reader["name"].ToString(),
+                        description: reader["description"].ToString(),
+                        status: Boolean.Parse(reader["status"].ToString()),
+                        mac: reader["mac"].ToString(),
+                        ip: reader["ip"]?.ToString(),
+                        lanPorts: int.Parse(reader["lan_ports"].ToString()),
+                        wanPorts: int.Parse(reader["wan_ports"].ToString()),
+                        consolePorts: int.Parse(reader["console_ports"].ToString()),
+                        vlan: reader["vlan"].ToString(), // reader.GetString(9)
+                        image: reader["image"].ToString()
+                    );
+                    if (reader["ip"].ToString() == "")
+                    {
+                        d.Ip = null;
+                    }
+                    if (reader["vlan"].ToString() == "")
+                    {
+                        d.Vlan = null;
+                    }
+
+                    devs.Add(d);
+                }
+
+            }
+
+            return devs;
         }
 
         public List<Device> GetDevicesByIP()

@@ -35,6 +35,11 @@ namespace up_network
             DevCardName.Text = currentDevice.Name;
             DevCardDesc.Text = currentDevice.Description;
             DevCardMAC.Text = currentDevice.Mac;
+            DevCardIP.Text = "Не зарезервирован";
+            if (currentDevice.Ip != null)
+            {
+                DevCardIP.Text = currentDevice.Ip;
+            }
 
             if (currentDevice.Status)
             {

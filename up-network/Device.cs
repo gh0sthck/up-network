@@ -56,6 +56,30 @@ namespace up_network
             set { vlan = value; }
         }
 
+        public int LanPorts
+        {
+            get { return lanPorts; }
+            set { lanPorts = value; }
+        }
+
+        public int WanPorts
+        {
+            get { return wanPorts; }
+            set { wanPorts = value; }
+        }
+
+        public int ConsolePorts
+        {
+            get { return consolePorts; }
+            set { consolePorts = value; }
+        }
+
+        public string Image
+        {
+            get { return image; }
+            set { image = value; }
+        }
+
         public Device(string name, string description, bool status, string mac, string? ip = null, string? vlan = null, int lanPorts = 1, int wanPorts = 1, int consolePorts = 1, string image = "")
         {
             this.name = name;
