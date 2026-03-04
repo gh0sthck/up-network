@@ -52,33 +52,16 @@ namespace up_network
 
         private void FilterBox_Changed(object sender, EventArgs e)
         {
-            // return db.GetSmthDevice();
             string state = MainFilterBox.SelectedIndex.ToString();
-            List<Device> dv = new List<Device>();
-            if (state == "3")
+
+            switch (state)
             {
-                foreach (var device in db.GetAllDevicesByName())
-                {
-                    if (device.Status)
-                    {
-                        dv.Add(device); 
-                    }
-                }
-            } else if (state == "4")
-            {
-                foreach (var dev in db.GetAllDevicesByName())
-                {
-                    if (!(dev.Status))
-                    {
-                        dv.Add(dev);
-                    }
-                }
+                case "0": InsertDeviceList(db.GetAllDevicesByName()); break;
+                case "1": InsertDeviceList(db.GetDevicesByIP()); break;
+                case "2": InsertDeviceList(db.GetDevicesByMac()); break;
+                case "3": InsertDeviceList(db.GetStatusDevices()); break;
+                case "4": InsertDeviceList(db.GetStatusDevices(false)); break;
             }
-            else
-            {
-                MessageBox.Show(state);
-            }
-            InsertDeviceList(dv);
             
         }
 

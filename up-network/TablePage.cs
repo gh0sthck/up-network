@@ -71,14 +71,29 @@ namespace up_network
         {
             MainUsername.Text = loggedUser.Login.ToString();
 
+            TableVlanFilter.Items.Add("Все");
             foreach (string val in db.GetVlanList())
             {
                 TableVlanFilter.Items.Add(val);
             }
             TableVlanFilter.SelectedIndex = 0;
+            TableVlanFilter.SelectedIndexChanged += FilterBox_Changed;
 
 
             InsertDeviceList(db.GetAllDevicesByName());
+        }
+
+        private void FilterBox_Changed(object sender, EventArgs e)
+        {
+            int state = TableVlanFilter.SelectedIndex;
+            if (state == 0)
+            {
+                InsertDeviceList(db.GetAllDevicesByName());
+                return;
+            }
+            List<string> vlans = db.GetVlanList();
+            InsertDeviceList(db.GetDevicesWithVlan(vlans[state-1]));
+            
         }
     }
 }
