@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Security.Cryptography;
 using System.Text;
+using static System.ComponentModel.Design.ObjectSelectorEditor;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace up_network
@@ -277,65 +278,220 @@ namespace up_network
 
         public List<Client> GetClientsByName(string cliName = "")
         {
-            //List<Client> clients = new List<Client>();
+            List<Client> clients = new List<Client>();
 
-            //using (connection = new SQLiteConnection(connectionString))
-            //{
-            //    connection.Open();
-            //    command = new SQLiteCommand();
-            //    command.CommandText = @$"SELECT id, name, description, status, mac, ip, lan_ports, wan_ports, console_ports, vlan, image FROM clients WHERE name = {cliName} ORDER BY name ASC;";
-            //    command.Connection = connection;
+            using (connection = new SQLiteConnection(connectionString))
+            {
+                connection.Open();
+                command = new SQLiteCommand();
+                command.CommandText = @"SELECT clients.name as cliName, companies.name, clients.contract, devices.id FROM clients  INNER JOIN  devices ON clients.device_id = devices.id  INNER JOIN companies ON clients.company_id = companies.id;";
+                command.Connection = connection;
 
-            //    var reader = command.ExecuteReader();
-            //    while (reader.Read())
-            //    {
+                var reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    Device d = new Device("", "", true, "");
+                    Client c = new Client(
+                        name: reader["cliName"].ToString(),
+                        company: reader["name"].ToString(),
+                        contractNumber: reader["contract"].ToString(),
+                        dev: d
+                    );
 
-            //        Device d = new Device(
-            //            name: reader["name"].ToString(),
-            //            description: reader["description"].ToString(),
-            //            status: Boolean.Parse(reader["status"].ToString()),
-            //            mac: reader["mac"].ToString(),
-            //            ip: reader["ip"]?.ToString(),
-            //            lanPorts: int.Parse(reader["lan_ports"].ToString()),
-            //            wanPorts: int.Parse(reader["wan_ports"].ToString()),
-            //            consolePorts: int.Parse(reader["console_ports"].ToString()),
-            //            vlan: reader["vlan"].ToString(), // reader.GetString(9)
-            //            image: reader["image"].ToString()
-            //        );
-            //        if (reader["ip"].ToString() == "")
-            //        {
-            //            d.Ip = null;
-            //        }
-            //        if (reader["vlan"].ToString() == "")
-            //        {
-            //            d.Vlan = null;
-            //        }
+                    
 
-            //        clients.Add(d);
-            //    }
+                    SQLiteCommand cmd2 = new SQLiteCommand();
+                    cmd2.CommandText = @$"SELECT name, description, status, mac, ip, lan_ports, wan_ports, console_ports, vlan, image FROM devices WHERE id = {reader["id"].ToString()} ORDER BY name ASC; ";
+                    cmd2.Connection = connection;
+                    var reader2 = cmd2.ExecuteReader();
+                    
+                    while (reader2.Read())
+                    {
+  
+                        d.Name = reader2["name"].ToString();
+                        d.Description = reader2["description"].ToString();
+                        d.Status = Boolean.Parse(reader2["status"].ToString());
+                        d.Mac = reader2["mac"].ToString();
+                        string ip = reader2["ip"].ToString();
+                        if (ip == "")
+                        {
+                            d.Ip = null;
+                        } else
+                        {
+                            d.Ip = ip;
+                        }
+                        d.LanPorts = int.Parse(reader2["lan_ports"].ToString());
+                        d.WanPorts = int.Parse(reader2["wan_ports"].ToString());
+                        d.ConsolePorts = int.Parse(reader2["console_ports"].ToString());
+                        string vlan = reader2["vlan"].ToString();
+                        if (vlan == "")
+                        {
+                            d.Vlan = null;
+                        } else
+                        {
+                            d.Vlan = vlan;
+                        }
+                        d.Image = reader2["image"].ToString();
+                    }
 
-            //}
 
-            //return clients;
+                    c.Device = d;
 
-            return GetFoobarClients();
+                    clients.Add(c);
+                }
+
+            }
+
+            return clients;
         }
 
         public List<Client> GetClientsByCompany(string company)
         {
-            return GetFoobarClients();
+            List<Client> clients = new List<Client>();
+
+            using (connection = new SQLiteConnection(connectionString))
+            {
+                connection.Open();
+                command = new SQLiteCommand();
+                command.CommandText = @$"SELECT clients.name as cliName, companies.name, clients.contract, devices.id FROM clients  INNER JOIN  devices ON clients.device_id = devices.id INNER JOIN companies ON clients.company_id = companies.id WHERE comapnies.name = {company};";
+                command.Connection = connection;
+
+                var reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    Device d = new Device("", "", true, "");
+                    Client c = new Client(
+                        name: reader["cliName"].ToString(),
+                        company: reader["name"].ToString(),
+                        contractNumber: reader["contract"].ToString(),
+                        dev: d
+                    );
+
+
+
+                    SQLiteCommand cmd2 = new SQLiteCommand();
+                    cmd2.CommandText = @$"SELECT name, description, status, mac, ip, lan_ports, wan_ports, console_ports, vlan, image FROM devices WHERE id = {reader["id"].ToString()} ORDER BY name ASC; ";
+                    cmd2.Connection = connection;
+                    var reader2 = cmd2.ExecuteReader();
+
+                    while (reader2.Read())
+                    {
+
+                        d.Name = reader2["name"].ToString();
+                        d.Description = reader2["description"].ToString();
+                        d.Status = Boolean.Parse(reader2["status"].ToString());
+                        d.Mac = reader2["mac"].ToString();
+                        string ip = reader2["ip"].ToString();
+                        if (ip == "")
+                        {
+                            d.Ip = null;
+                        }
+                        else
+                        {
+                            d.Ip = ip;
+                        }
+                        d.LanPorts = int.Parse(reader2["lan_ports"].ToString());
+                        d.WanPorts = int.Parse(reader2["wan_ports"].ToString());
+                        d.ConsolePorts = int.Parse(reader2["console_ports"].ToString());
+                        string vlan = reader2["vlan"].ToString();
+                        if (vlan == "")
+                        {
+                            d.Vlan = null;
+                        }
+                        else
+                        {
+                            d.Vlan = vlan;
+                        }
+                        d.Image = reader2["image"].ToString();
+                    }
+
+
+                    c.Device = d;
+
+                    clients.Add(c);
+                }
+
+            }
+
+            return clients;
         }
 
         public List<Client> GetClientsByContract(string contract)
         {
-            return GetFoobarClients();
+            List<Client> clients = new List<Client>();
+
+            using (connection = new SQLiteConnection(connectionString))
+            {
+                connection.Open();
+                command = new SQLiteCommand();
+                command.CommandText = @$"SELECT clients.name as cliName, companies.name, clients.contract, devices.id FROM clients  INNER JOIN  devices ON clients.device_id = devices.id INNER JOIN companies ON clients.company_id = companies.id WHERE comapnies.name = {contract};";
+                command.Connection = connection;
+
+                var reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    Device d = new Device("", "", true, "");
+                    Client c = new Client(
+                        name: reader["cliName"].ToString(),
+                        company: reader["name"].ToString(),
+                        contractNumber: reader["contract"].ToString(),
+                        dev: d
+                    );
+
+
+
+                    SQLiteCommand cmd2 = new SQLiteCommand();
+                    cmd2.CommandText = @$"SELECT name, description, status, mac, ip, lan_ports, wan_ports, console_ports, vlan, image FROM devices WHERE id = {reader["id"].ToString()} ORDER BY name ASC; ";
+                    cmd2.Connection = connection;
+                    var reader2 = cmd2.ExecuteReader();
+
+                    while (reader2.Read())
+                    {
+
+                        d.Name = reader2["name"].ToString();
+                        d.Description = reader2["description"].ToString();
+                        d.Status = Boolean.Parse(reader2["status"].ToString());
+                        d.Mac = reader2["mac"].ToString();
+                        string ip = reader2["ip"].ToString();
+                        if (ip == "")
+                        {
+                            d.Ip = null;
+                        }
+                        else
+                        {
+                            d.Ip = ip;
+                        }
+                        d.LanPorts = int.Parse(reader2["lan_ports"].ToString());
+                        d.WanPorts = int.Parse(reader2["wan_ports"].ToString());
+                        d.ConsolePorts = int.Parse(reader2["console_ports"].ToString());
+                        string vlan = reader2["vlan"].ToString();
+                        if (vlan == "")
+                        {
+                            d.Vlan = null;
+                        }
+                        else
+                        {
+                            d.Vlan = vlan;
+                        }
+                        d.Image = reader2["image"].ToString();
+                    }
+
+
+                    c.Device = d;
+
+                    clients.Add(c);
+                }
+
+            }
+
+            return clients;
         }
 
         public List<String> GetUniqueDevicesName()
         {
             List<String> names = new List<string>();
 
-            foreach (Device device in GetFoobarDevices())
+            foreach (Device device in GetAllDevicesByName())
             {
                 if (!(names.Contains(device.Name)))
                 {
@@ -349,7 +505,7 @@ namespace up_network
         {
             List<String> names = new List<string>();
 
-            foreach (Client client in GetFoobarClients())
+            foreach (Client client in GetClientsByName())
             {
                 if (!(names.Contains(client.ContractNumber.ToString())))
                 {
@@ -364,7 +520,7 @@ namespace up_network
 
             List<String> names = new List<string>();
 
-            foreach (Client cli in GetFoobarClients())
+            foreach (Client cli in GetClientsByName())
             {
                 if (!(names.Contains(cli.Name)))
                 {
