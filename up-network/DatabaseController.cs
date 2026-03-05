@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
+using System.Diagnostics.Contracts;
 using System.Security.Cryptography;
 using System.Text;
 using static System.ComponentModel.Design.ObjectSelectorEditor;
@@ -276,7 +277,7 @@ namespace up_network
             return devs;
         }
 
-        public List<Client> GetClientsByName(string cliName = "")
+        public List<Client> GetClientsByName()
         {
             List<Client> clients = new List<Client>();
 
@@ -284,7 +285,7 @@ namespace up_network
             {
                 connection.Open();
                 command = new SQLiteCommand();
-                command.CommandText = @"SELECT clients.name as cliName, companies.name, clients.contract, devices.id FROM clients  INNER JOIN  devices ON clients.device_id = devices.id  INNER JOIN companies ON clients.company_id = companies.id;";
+                command.CommandText = @$"SELECT clients.name as cliName, companies.name, clients.contract, devices.id FROM clients  INNER JOIN  devices ON clients.device_id = devices.id  INNER JOIN companies ON clients.company_id = companies.id;";
                 command.Connection = connection;
 
                 var reader = command.ExecuteReader();
@@ -353,7 +354,7 @@ namespace up_network
             {
                 connection.Open();
                 command = new SQLiteCommand();
-                command.CommandText = @$"SELECT clients.name as cliName, companies.name, clients.contract, devices.id FROM clients  INNER JOIN  devices ON clients.device_id = devices.id INNER JOIN companies ON clients.company_id = companies.id WHERE comapnies.name = {company};";
+                command.CommandText = @$"SELECT clients.name as cliName, companies.name, clients.contract, devices.id FROM clients  INNER JOIN  devices ON clients.device_id = devices.id INNER JOIN companies ON clients.company_id = companies.id WHERE companies.name = '{company}';";
                 command.Connection = connection;
 
                 var reader = command.ExecuteReader();
@@ -424,7 +425,78 @@ namespace up_network
             {
                 connection.Open();
                 command = new SQLiteCommand();
-                command.CommandText = @$"SELECT clients.name as cliName, companies.name, clients.contract, devices.id FROM clients  INNER JOIN  devices ON clients.device_id = devices.id INNER JOIN companies ON clients.company_id = companies.id WHERE comapnies.name = {contract};";
+                command.CommandText = @$"SELECT clients.name as cliName, companies.name, clients.contract, devices.id FROM clients  INNER JOIN  devices ON clients.device_id = devices.id INNER JOIN companies ON clients.company_id = companies.id WHERE contract = '{contract}';";
+                command.Connection = connection;
+
+                var reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    Device d = new Device("", "", true, "");
+                    Client c = new Client(
+                        name: reader["cliName"].ToString(),
+                        company: reader["name"].ToString(),
+                        contractNumber: reader["contract"].ToString(),
+                        dev: d
+                    );
+
+
+
+                    SQLiteCommand cmd2 = new SQLiteCommand();
+                    cmd2.CommandText = @$"SELECT name, description, status, mac, ip, lan_ports, wan_ports, console_ports, vlan, image FROM devices WHERE id = {reader["id"].ToString()} ORDER BY name ASC; ";
+                    cmd2.Connection = connection;
+                    var reader2 = cmd2.ExecuteReader();
+
+                    while (reader2.Read())
+                    {
+
+                        d.Name = reader2["name"].ToString();
+                        d.Description = reader2["description"].ToString();
+                        d.Status = Boolean.Parse(reader2["status"].ToString());
+                        d.Mac = reader2["mac"].ToString();
+                        string ip = reader2["ip"].ToString();
+                        if (ip == "")
+                        {
+                            d.Ip = null;
+                        }
+                        else
+                        {
+                            d.Ip = ip;
+                        }
+                        d.LanPorts = int.Parse(reader2["lan_ports"].ToString());
+                        d.WanPorts = int.Parse(reader2["wan_ports"].ToString());
+                        d.ConsolePorts = int.Parse(reader2["console_ports"].ToString());
+                        string vlan = reader2["vlan"].ToString();
+                        if (vlan == "")
+                        {
+                            d.Vlan = null;
+                        }
+                        else
+                        {
+                            d.Vlan = vlan;
+                        }
+                        d.Image = reader2["image"].ToString();
+                    }
+
+
+                    c.Device = d;
+
+                    clients.Add(c);
+                }
+
+            }
+
+            return clients;
+        }
+
+        public List<Client> GetClientsByDevice(string devName)
+        {
+            List<Client> clients = new List<Client>();
+
+            using (connection = new SQLiteConnection(connectionString))
+            {
+                connection.Open();
+                command = new SQLiteCommand();
+                command.CommandText = @$"SELECT clients.name as cliName, companies.name, clients.contract, devices.id, devices.name FROM clients  INNER JOIN  devices ON clients.device_id = devices.id INNER JOIN companies ON clients.company_id = companies.id WHERE devices.name = '{devName}';";
                 command.Connection = connection;
 
                 var reader = command.ExecuteReader();
@@ -522,7 +594,7 @@ namespace up_network
 
             foreach (Client cli in GetClientsByName())
             {
-                if (!(names.Contains(cli.Name)))
+                if (!(names.Contains(cli.Company)))
                 {
                     names.Add(cli.Company);
                 }

@@ -33,27 +33,66 @@ namespace up_network
             }
         }
 
+        private void ClientsDeviceFilter_Changed(object sender, EventArgs e)
+        {
+            int state = ClientsDeviceFilter.SelectedIndex;
+            if (state == 0)
+            {
+                InsertClientsList(db.GetClientsByName());
+                return;
+            }
+            InsertClientsList(db.GetClientsByDevice(ClientsDeviceFilter.Items[state].ToString()));
+        }
+
+        private void ClientsNameFilter_Changed(object sender, EventArgs e)
+        {
+            int state = ClientsNameFilter.SelectedIndex;
+            if (state == 0) 
+            {
+                InsertClientsList(db.GetClientsByName());
+                return;
+            }
+            InsertClientsList(db.GetClientsByCompany(ClientsNameFilter.Items[state].ToString()));
+        }
+
+        private void ClientsContractFilter_Changed(object sender, EventArgs e)
+        {
+            int state = ClientsContractFilter.SelectedIndex;
+            if (state == 0)
+            {
+                InsertClientsList(db.GetClientsByName());
+                return;
+            }
+            InsertClientsList(db.GetClientsByContract(ClientsContractFilter.Items[state].ToString()));
+        }
+
         private void ClientsPage_Load(object sender, EventArgs e)
         {
             MainUsername.Text = loggedUser.Login.ToString();
 
+            ClientsDeviceFilter.Items.Add("Все устройтсва");
             foreach (string val in db.GetUniqueDevicesName())
             {
                 ClientsDeviceFilter.Items.Add(val);
             }
             ClientsDeviceFilter.SelectedIndex = 0;
+            ClientsDeviceFilter.SelectedIndexChanged += ClientsDeviceFilter_Changed;
 
+            ClientsNameFilter.Items.Add("Все компании");
             foreach (string val in db.GetCompaniesList())
             {
                 ClientsNameFilter.Items.Add(val);
             }
             ClientsNameFilter.SelectedIndex = 0;
+            ClientsNameFilter.SelectedIndexChanged += ClientsNameFilter_Changed;
 
+            ClientsContractFilter.Items.Add("Все контракты");
             foreach (string val in db.GetContractsName())
             {
                 ClientsContractFilter.Items.Add(val);
             }
             ClientsContractFilter.SelectedIndex = 0;
+            ClientsContractFilter.SelectedIndexChanged += ClientsContractFilter_Changed;
 
             InsertClientsList(db.GetClientsByName());
 
