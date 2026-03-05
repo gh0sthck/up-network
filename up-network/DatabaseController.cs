@@ -618,5 +618,10 @@ namespace up_network
             }
             return names;
         }
+
+        public User? GetUserByName(string username)
+        {
+            return null;
+        }
     }
 }
