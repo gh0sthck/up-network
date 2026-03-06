@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             panel1 = new Panel();
+            MainRoleText = new Label();
             MainExitButton = new Button();
             NavbarClientsBg = new Panel();
             label4 = new Label();
@@ -41,6 +42,7 @@
             MainFlowLayout = new FlowLayoutPanel();
             MainFilterBox = new ComboBox();
             label5 = new Label();
+            MainAddBtn = new Button();
             panel1.SuspendLayout();
             NavbarClientsBg.SuspendLayout();
             NavbarTableBg.SuspendLayout();
@@ -50,6 +52,7 @@
             // panel1
             // 
             panel1.BackColor = Color.FromArgb(100, 171, 251);
+            panel1.Controls.Add(MainRoleText);
             panel1.Controls.Add(MainExitButton);
             panel1.Controls.Add(NavbarClientsBg);
             panel1.Controls.Add(NavbarTableBg);
@@ -61,11 +64,23 @@
             panel1.Size = new Size(262, 711);
             panel1.TabIndex = 0;
             // 
+            // MainRoleText
+            // 
+            MainRoleText.AutoSize = true;
+            MainRoleText.Font = new Font("Geometria", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            MainRoleText.ForeColor = Color.White;
+            MainRoleText.Location = new Point(25, 633);
+            MainRoleText.Name = "MainRoleText";
+            MainRoleText.Size = new Size(129, 20);
+            MainRoleText.TabIndex = 7;
+            MainRoleText.Text = "(Administrator)";
+            // 
             // MainExitButton
             // 
-            MainExitButton.Location = new Point(25, 676);
+            MainExitButton.Font = new Font("Geometria", 11.2499981F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            MainExitButton.Location = new Point(25, 667);
             MainExitButton.Name = "MainExitButton";
-            MainExitButton.Size = new Size(195, 23);
+            MainExitButton.Size = new Size(195, 32);
             MainExitButton.TabIndex = 6;
             MainExitButton.Text = "Выход";
             MainExitButton.UseVisualStyleBackColor = true;
@@ -159,7 +174,7 @@
             MainUsername.AutoSize = true;
             MainUsername.Font = new Font("Geometria", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             MainUsername.ForeColor = Color.White;
-            MainUsername.Location = new Point(25, 643);
+            MainUsername.Location = new Point(25, 600);
             MainUsername.Name = "MainUsername";
             MainUsername.Size = new Size(195, 20);
             MainUsername.TabIndex = 0;
@@ -183,6 +198,7 @@
             MainFilterBox.Name = "MainFilterBox";
             MainFilterBox.Size = new Size(192, 28);
             MainFilterBox.TabIndex = 2;
+            MainFilterBox.Visible = false;
             // 
             // label5
             // 
@@ -193,11 +209,25 @@
             label5.Size = new Size(120, 20);
             label5.TabIndex = 3;
             label5.Text = "Фильтровать:";
+            label5.Visible = false;
+            // 
+            // MainAddBtn
+            // 
+            MainAddBtn.Font = new Font("Geometria", 11.2499981F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            MainAddBtn.Location = new Point(1037, 37);
+            MainAddBtn.Name = "MainAddBtn";
+            MainAddBtn.Size = new Size(233, 28);
+            MainAddBtn.TabIndex = 4;
+            MainAddBtn.Text = "Добавить устройство";
+            MainAddBtn.UseVisualStyleBackColor = true;
+            MainAddBtn.Visible = false;
+            MainAddBtn.Click += MainAddBtn_Click;
             // 
             // MainPage
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(MainAddBtn);
             Controls.Add(label5);
             Controls.Add(MainFilterBox);
             Controls.Add(MainFlowLayout);
@@ -232,5 +262,7 @@
         private Button MainExitButton;
         private ComboBox MainFilterBox;
         private Label label5;
+        private Button MainAddBtn;
+        private Label MainRoleText;
     }
 }

@@ -12,12 +12,9 @@ namespace up_network
     internal class DatabaseController
     {
         private readonly string connectionString;
-        private SQLiteConnection connection;
-        private SQLiteCommand command;
         
         public DatabaseController() 
         {
-            //MessageBox.Show(Environment.CurrentDirectory);
             connectionString = $"Data Source = " + Environment.CurrentDirectory + @"\data.db; Version = 3;";
             
         }
@@ -57,22 +54,9 @@ namespace up_network
             return clients;
         }
 
-        public List<Device> GetAllDevicesByName()
+        public Device GetDeviceFromReader(SQLiteDataReader reader)
         {
-            List<Device> devs = new List<Device>();
-
-            using (connection = new SQLiteConnection(connectionString))
-            {
-                connection.Open();
-                command = new SQLiteCommand();
-                command.CommandText = @"SELECT id, name, description, status, mac, ip, lan_ports, wan_ports, console_ports, vlan, image FROM devices ORDER BY name ASC;";
-                command.Connection = connection;
-
-                var reader = command.ExecuteReader();
-                while (reader.Read())
-                {
-
-                    Device d = new Device(
+            Device d = new Device(
                         name: reader["name"].ToString(),
                         description: reader["description"].ToString(),
                         status: Boolean.Parse(reader["status"].ToString()),
@@ -81,21 +65,41 @@ namespace up_network
                         lanPorts: int.Parse(reader["lan_ports"].ToString()),
                         wanPorts: int.Parse(reader["wan_ports"].ToString()),
                         consolePorts: int.Parse(reader["console_ports"].ToString()),
-                        vlan: reader["vlan"].ToString(), 
+                        vlan: reader["vlan"].ToString(),
                         image: reader["image"].ToString()
                     );
-                    if (reader["ip"].ToString() == "")
-                    {
-                        d.Ip = null;
-                    }
-                    if (reader["vlan"].ToString() == "")
-                    {
-                        d.Vlan = null;
-                    }
+            if (reader["ip"].ToString() == "")
+            {
+                d.Ip = null;
+            }
+            if (reader["vlan"].ToString() == "")
+            {
+                d.Vlan = null;
+            }
+            return d;
+        }
 
-                    devs.Add(d);
+        public List<Device> GetAllDevicesByName()
+        {
+            List<Device> devs = new List<Device>();
+
+            using (var connection = new SQLiteConnection(connectionString))
+            {
+                connection.Open();
+                var command = new SQLiteCommand();
+                command.CommandText = @"SELECT id, name, description, status, mac, ip, lan_ports, wan_ports, console_ports, vlan, image FROM devices ORDER BY name ASC;";
+                command.Connection = connection;
+
+                using (command)
+                {
+                    using (var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            devs.Add(GetDeviceFromReader(reader));
+                        }
+                    }
                 }
-
             }
 
             return devs;
@@ -105,41 +109,23 @@ namespace up_network
         {
             List<Device> devs = new List<Device>();
 
-            using (connection = new SQLiteConnection(connectionString))
+            using (var connection = new SQLiteConnection(connectionString))
             {
                 connection.Open();
-                command = new SQLiteCommand();
+                var command = new SQLiteCommand();
                 command.CommandText = @"SELECT id, name, description, status, mac, ip, lan_ports, wan_ports, console_ports, vlan, image FROM devices ORDER BY mac ASC;";
                 command.Connection = connection;
 
-                var reader = command.ExecuteReader();
-                while (reader.Read())
+                using (command)
                 {
-
-                    Device d = new Device(
-                        name: reader["name"].ToString(),
-                        description: reader["description"].ToString(),
-                        status: Boolean.Parse(reader["status"].ToString()),
-                        mac: reader["mac"].ToString(),
-                        ip: reader["ip"]?.ToString(),
-                        lanPorts: int.Parse(reader["lan_ports"].ToString()),
-                        wanPorts: int.Parse(reader["wan_ports"].ToString()),
-                        consolePorts: int.Parse(reader["console_ports"].ToString()),
-                        vlan: reader["vlan"].ToString(),
-                        image: reader["image"].ToString()
-                    );
-                    if (reader["ip"].ToString() == "")
+                    using (var reader = command.ExecuteReader())
                     {
-                        d.Ip = null;
+                        while (reader.Read())
+                        {
+                            devs.Add(GetDeviceFromReader(reader));
+                        }
                     }
-                    if (reader["vlan"].ToString() == "")
-                    {
-                        d.Vlan = null;
-                    }
-
-                    devs.Add(d);
                 }
-
             }
 
             return devs;
@@ -149,41 +135,23 @@ namespace up_network
         {
             List<Device> devs = new List<Device>();
 
-            using (connection = new SQLiteConnection(connectionString))
+            using (var connection = new SQLiteConnection(connectionString))
             {
                 connection.Open();
-                command = new SQLiteCommand();
+                var command = new SQLiteCommand();
                 command.CommandText = @"SELECT id, name, description, status, mac, ip, lan_ports, wan_ports, console_ports, vlan, image FROM devices ORDER BY ip ASC;";
                 command.Connection = connection;
 
-                var reader = command.ExecuteReader();
-                while (reader.Read())
+                using (command)
                 {
-
-                    Device d = new Device(
-                        name: reader["name"].ToString(),
-                        description: reader["description"].ToString(),
-                        status: Boolean.Parse(reader["status"].ToString()),
-                        mac: reader["mac"].ToString(),
-                        ip: reader["ip"]?.ToString(),
-                        lanPorts: int.Parse(reader["lan_ports"].ToString()),
-                        wanPorts: int.Parse(reader["wan_ports"].ToString()),
-                        consolePorts: int.Parse(reader["console_ports"].ToString()),
-                        vlan: reader["vlan"].ToString(),
-                        image: reader["image"].ToString()
-                    );
-                    if (reader["ip"].ToString() == "")
+                    using (var reader = command.ExecuteReader())
                     {
-                        d.Ip = null;
+                        while (reader.Read())
+                        {
+                            devs.Add(GetDeviceFromReader(reader));
+                        }
                     }
-                    if (reader["vlan"].ToString() == "")
-                    {
-                        d.Vlan = null;
-                    }
-
-                    devs.Add(d);
                 }
-
             }
 
             return devs;
@@ -193,41 +161,23 @@ namespace up_network
         {
             List<Device> devs = new List<Device>();
 
-            using (connection = new SQLiteConnection(connectionString))
+            using (var connection = new SQLiteConnection(connectionString))
             {
                 connection.Open();
-                command = new SQLiteCommand();
+                var command = new SQLiteCommand();
                 command.CommandText = @$"SELECT id, name, description, status, mac, ip, lan_ports, wan_ports, console_ports, vlan, image FROM devices WHERE status = {status} ORDER BY name ASC;";
                 command.Connection = connection;
 
-                var reader = command.ExecuteReader();
-                while (reader.Read())
+                using (command)
                 {
-
-                    Device d = new Device(
-                        name: reader["name"].ToString(),
-                        description: reader["description"].ToString(),
-                        status: Boolean.Parse(reader["status"].ToString()),
-                        mac: reader["mac"].ToString(),
-                        ip: reader["ip"]?.ToString(),
-                        lanPorts: int.Parse(reader["lan_ports"].ToString()),
-                        wanPorts: int.Parse(reader["wan_ports"].ToString()),
-                        consolePorts: int.Parse(reader["console_ports"].ToString()),
-                        vlan: reader["vlan"].ToString(), 
-                        image: reader["image"].ToString()
-                    );
-                    if (reader["ip"].ToString() == "")
+                    using (var reader = command.ExecuteReader())
                     {
-                        d.Ip = null;
+                        while (reader.Read())
+                        {
+                            devs.Add(GetDeviceFromReader(reader));
+                        }
                     }
-                    if (reader["vlan"].ToString() == "")
-                    {
-                        d.Vlan = null;
-                    }
-
-                    devs.Add(d);
                 }
-
             }
 
             return devs;
@@ -237,43 +187,25 @@ namespace up_network
         {
             List<Device> devs = new List<Device>();
 
-            using (connection = new SQLiteConnection(connectionString))
+            using (var connection = new SQLiteConnection(connectionString))
             {
                 connection.Open();
-                command = new SQLiteCommand();
+                var command = new SQLiteCommand();
                 command.CommandText = @$"SELECT id, name, description, status, mac, ip, lan_ports, wan_ports, console_ports, vlan, image FROM devices WHERE vlan = '{vlan}' ORDER BY name ASC;";
                 command.Connection = connection;
 
-                var reader = command.ExecuteReader();
-                while (reader.Read())
+                using (command)
                 {
-
-                    Device d = new Device(
-                        name: reader["name"].ToString(),
-                        description: reader["description"].ToString(),
-                        status: Boolean.Parse(reader["status"].ToString()),
-                        mac: reader["mac"].ToString(),
-                        ip: reader["ip"]?.ToString(),
-                        lanPorts: int.Parse(reader["lan_ports"].ToString()),
-                        wanPorts: int.Parse(reader["wan_ports"].ToString()),
-                        consolePorts: int.Parse(reader["console_ports"].ToString()),
-                        vlan: reader["vlan"].ToString(),
-                        image: reader["image"].ToString()
-                    );
-                    if (reader["ip"].ToString() == "")
+                    using (var reader = command.ExecuteReader())
                     {
-                        d.Ip = null;
-                    }
-                    if (reader["vlan"].ToString() == "")
-                    {
-                        d.Vlan = null;
+                        while (reader.Read())
+                        {
+                            devs.Add(GetDeviceFromReader(reader));
+                        }
                     }
 
-                    devs.Add(d);
                 }
-
             }
-
             return devs;
         }
 
@@ -281,66 +213,29 @@ namespace up_network
         {
             List<Client> clients = new List<Client>();
 
-            using (connection = new SQLiteConnection(connectionString))
+            using (var connection = new SQLiteConnection(connectionString))
             {
                 connection.Open();
-                command = new SQLiteCommand();
-                command.CommandText = @$"SELECT clients.name as cliName, companies.name, clients.contract, devices.id FROM clients  INNER JOIN  devices ON clients.device_id = devices.id  INNER JOIN companies ON clients.company_id = companies.id;";
+                var command = new SQLiteCommand();
+                command.CommandText = @$"SELECT clients.name as cliName, companies.name, clients.contract, devices.name, devices.description, devices.status, devices.mac, devices.ip, devices.lan_ports, devices.wan_ports, devices.console_ports, devices.vlan, devices.image FROM clients  INNER JOIN  devices ON clients.device_id = devices.id  INNER JOIN companies ON clients.company_id = companies.id;";
                 command.Connection = connection;
 
-                var reader = command.ExecuteReader();
-                while (reader.Read())
+                using (command)
                 {
-                    Device d = new Device("", "", true, "");
-                    Client c = new Client(
-                        name: reader["cliName"].ToString(),
-                        company: reader["name"].ToString(),
-                        contractNumber: reader["contract"].ToString(),
-                        dev: d
-                    );
-
-                    
-
-                    SQLiteCommand cmd2 = new SQLiteCommand();
-                    cmd2.CommandText = @$"SELECT name, description, status, mac, ip, lan_ports, wan_ports, console_ports, vlan, image FROM devices WHERE id = {reader["id"].ToString()} ORDER BY name ASC; ";
-                    cmd2.Connection = connection;
-                    var reader2 = cmd2.ExecuteReader();
-                    
-                    while (reader2.Read())
+                    using (var reader = command.ExecuteReader())
                     {
-  
-                        d.Name = reader2["name"].ToString();
-                        d.Description = reader2["description"].ToString();
-                        d.Status = Boolean.Parse(reader2["status"].ToString());
-                        d.Mac = reader2["mac"].ToString();
-                        string ip = reader2["ip"].ToString();
-                        if (ip == "")
+                        while (reader.Read())
                         {
-                            d.Ip = null;
-                        } else
-                        {
-                            d.Ip = ip;
+                            Client c = new Client(
+                                name: reader["cliName"].ToString(),
+                                company: reader["name"].ToString(),
+                                contractNumber: reader["contract"].ToString(),
+                                dev: GetDeviceFromReader(reader)
+                            );
+                            clients.Add(c);
                         }
-                        d.LanPorts = int.Parse(reader2["lan_ports"].ToString());
-                        d.WanPorts = int.Parse(reader2["wan_ports"].ToString());
-                        d.ConsolePorts = int.Parse(reader2["console_ports"].ToString());
-                        string vlan = reader2["vlan"].ToString();
-                        if (vlan == "")
-                        {
-                            d.Vlan = null;
-                        } else
-                        {
-                            d.Vlan = vlan;
-                        }
-                        d.Image = reader2["image"].ToString();
                     }
-
-
-                    c.Device = d;
-
-                    clients.Add(c);
                 }
-
             }
 
             return clients;
@@ -350,68 +245,29 @@ namespace up_network
         {
             List<Client> clients = new List<Client>();
 
-            using (connection = new SQLiteConnection(connectionString))
+            using (var connection = new SQLiteConnection(connectionString))
             {
                 connection.Open();
-                command = new SQLiteCommand();
-                command.CommandText = @$"SELECT clients.name as cliName, companies.name, clients.contract, devices.id FROM clients  INNER JOIN  devices ON clients.device_id = devices.id INNER JOIN companies ON clients.company_id = companies.id WHERE companies.name = '{company}';";
+                var command = new SQLiteCommand();
+                command.CommandText = @$"SELECT clients.name as cliName, companies.name, clients.contract, devices.name, devices.description, devices.status, devices.mac, devices.ip, devices.lan_ports, devices.wan_ports, devices.console_ports, devices.vlan, devices.image FROM clients  INNER JOIN  devices ON clients.device_id = devices.id  INNER JOIN companies ON clients.company_id = companies.id WHERE companies.name = '{company}';";
                 command.Connection = connection;
 
-                var reader = command.ExecuteReader();
-                while (reader.Read())
+                using (command)
                 {
-                    Device d = new Device("", "", true, "");
-                    Client c = new Client(
-                        name: reader["cliName"].ToString(),
-                        company: reader["name"].ToString(),
-                        contractNumber: reader["contract"].ToString(),
-                        dev: d
-                    );
-
-
-
-                    SQLiteCommand cmd2 = new SQLiteCommand();
-                    cmd2.CommandText = @$"SELECT name, description, status, mac, ip, lan_ports, wan_ports, console_ports, vlan, image FROM devices WHERE id = {reader["id"].ToString()} ORDER BY name ASC; ";
-                    cmd2.Connection = connection;
-                    var reader2 = cmd2.ExecuteReader();
-
-                    while (reader2.Read())
+                    using (var reader = command.ExecuteReader())
                     {
-
-                        d.Name = reader2["name"].ToString();
-                        d.Description = reader2["description"].ToString();
-                        d.Status = Boolean.Parse(reader2["status"].ToString());
-                        d.Mac = reader2["mac"].ToString();
-                        string ip = reader2["ip"].ToString();
-                        if (ip == "")
+                        while (reader.Read())
                         {
-                            d.Ip = null;
+                            Client c = new Client(
+                                name: reader["cliName"].ToString(),
+                                company: reader["name"].ToString(),
+                                contractNumber: reader["contract"].ToString(),
+                                dev: GetDeviceFromReader(reader)
+                            );
+                            clients.Add(c);
                         }
-                        else
-                        {
-                            d.Ip = ip;
-                        }
-                        d.LanPorts = int.Parse(reader2["lan_ports"].ToString());
-                        d.WanPorts = int.Parse(reader2["wan_ports"].ToString());
-                        d.ConsolePorts = int.Parse(reader2["console_ports"].ToString());
-                        string vlan = reader2["vlan"].ToString();
-                        if (vlan == "")
-                        {
-                            d.Vlan = null;
-                        }
-                        else
-                        {
-                            d.Vlan = vlan;
-                        }
-                        d.Image = reader2["image"].ToString();
                     }
-
-
-                    c.Device = d;
-
-                    clients.Add(c);
                 }
-
             }
 
             return clients;
@@ -421,68 +277,29 @@ namespace up_network
         {
             List<Client> clients = new List<Client>();
 
-            using (connection = new SQLiteConnection(connectionString))
+            using (var connection = new SQLiteConnection(connectionString))
             {
                 connection.Open();
-                command = new SQLiteCommand();
-                command.CommandText = @$"SELECT clients.name as cliName, companies.name, clients.contract, devices.id FROM clients  INNER JOIN  devices ON clients.device_id = devices.id INNER JOIN companies ON clients.company_id = companies.id WHERE contract = '{contract}';";
+                var command = new SQLiteCommand();
+                command.CommandText = @$"SELECT clients.name as cliName, companies.name, clients.contract, devices.name, devices.description, devices.status, devices.mac, devices.ip, devices.lan_ports, devices.wan_ports, devices.console_ports, devices.vlan, devices.image FROM clients  INNER JOIN  devices ON clients.device_id = devices.id  INNER JOIN companies ON clients.company_id = companies.id WHERE contract = '{contract}';";
                 command.Connection = connection;
 
-                var reader = command.ExecuteReader();
-                while (reader.Read())
+                using (command)
                 {
-                    Device d = new Device("", "", true, "");
-                    Client c = new Client(
-                        name: reader["cliName"].ToString(),
-                        company: reader["name"].ToString(),
-                        contractNumber: reader["contract"].ToString(),
-                        dev: d
-                    );
-
-
-
-                    SQLiteCommand cmd2 = new SQLiteCommand();
-                    cmd2.CommandText = @$"SELECT name, description, status, mac, ip, lan_ports, wan_ports, console_ports, vlan, image FROM devices WHERE id = {reader["id"].ToString()} ORDER BY name ASC; ";
-                    cmd2.Connection = connection;
-                    var reader2 = cmd2.ExecuteReader();
-
-                    while (reader2.Read())
+                    using (var reader = command.ExecuteReader())
                     {
-
-                        d.Name = reader2["name"].ToString();
-                        d.Description = reader2["description"].ToString();
-                        d.Status = Boolean.Parse(reader2["status"].ToString());
-                        d.Mac = reader2["mac"].ToString();
-                        string ip = reader2["ip"].ToString();
-                        if (ip == "")
+                        while (reader.Read())
                         {
-                            d.Ip = null;
+                            Client c = new Client(
+                                name: reader["cliName"].ToString(),
+                                company: reader["name"].ToString(),
+                                contractNumber: reader["contract"].ToString(),
+                                dev: GetDeviceFromReader(reader)
+                            );
+                            clients.Add(c);
                         }
-                        else
-                        {
-                            d.Ip = ip;
-                        }
-                        d.LanPorts = int.Parse(reader2["lan_ports"].ToString());
-                        d.WanPorts = int.Parse(reader2["wan_ports"].ToString());
-                        d.ConsolePorts = int.Parse(reader2["console_ports"].ToString());
-                        string vlan = reader2["vlan"].ToString();
-                        if (vlan == "")
-                        {
-                            d.Vlan = null;
-                        }
-                        else
-                        {
-                            d.Vlan = vlan;
-                        }
-                        d.Image = reader2["image"].ToString();
                     }
-
-
-                    c.Device = d;
-
-                    clients.Add(c);
                 }
-
             }
 
             return clients;
@@ -492,68 +309,29 @@ namespace up_network
         {
             List<Client> clients = new List<Client>();
 
-            using (connection = new SQLiteConnection(connectionString))
+            using (var connection = new SQLiteConnection(connectionString))
             {
                 connection.Open();
-                command = new SQLiteCommand();
-                command.CommandText = @$"SELECT clients.name as cliName, companies.name, clients.contract, devices.id, devices.name FROM clients  INNER JOIN  devices ON clients.device_id = devices.id INNER JOIN companies ON clients.company_id = companies.id WHERE devices.name = '{devName}';";
+                var command = new SQLiteCommand();
+                command.CommandText = @$"SELECT clients.name as cliName, companies.name, clients.contract, devices.name, devices.description, devices.status, devices.mac, devices.ip, devices.lan_ports, devices.wan_ports, devices.console_ports, devices.vlan, devices.image FROM clients  INNER JOIN  devices ON clients.device_id = devices.id  INNER JOIN companies ON clients.company_id = companies.id  WHERE devices.name = '{devName}';";
                 command.Connection = connection;
 
-                var reader = command.ExecuteReader();
-                while (reader.Read())
+                using (command)
                 {
-                    Device d = new Device("", "", true, "");
-                    Client c = new Client(
-                        name: reader["cliName"].ToString(),
-                        company: reader["name"].ToString(),
-                        contractNumber: reader["contract"].ToString(),
-                        dev: d
-                    );
-
-
-
-                    SQLiteCommand cmd2 = new SQLiteCommand();
-                    cmd2.CommandText = @$"SELECT name, description, status, mac, ip, lan_ports, wan_ports, console_ports, vlan, image FROM devices WHERE id = {reader["id"].ToString()} ORDER BY name ASC; ";
-                    cmd2.Connection = connection;
-                    var reader2 = cmd2.ExecuteReader();
-
-                    while (reader2.Read())
+                    using (var reader = command.ExecuteReader())
                     {
-
-                        d.Name = reader2["name"].ToString();
-                        d.Description = reader2["description"].ToString();
-                        d.Status = Boolean.Parse(reader2["status"].ToString());
-                        d.Mac = reader2["mac"].ToString();
-                        string ip = reader2["ip"].ToString();
-                        if (ip == "")
+                        while (reader.Read())
                         {
-                            d.Ip = null;
+                            Client c = new Client(
+                                name: reader["cliName"].ToString(),
+                                company: reader["name"].ToString(),
+                                contractNumber: reader["contract"].ToString(),
+                                dev: GetDeviceFromReader(reader)
+                            );
+                            clients.Add(c);
                         }
-                        else
-                        {
-                            d.Ip = ip;
-                        }
-                        d.LanPorts = int.Parse(reader2["lan_ports"].ToString());
-                        d.WanPorts = int.Parse(reader2["wan_ports"].ToString());
-                        d.ConsolePorts = int.Parse(reader2["console_ports"].ToString());
-                        string vlan = reader2["vlan"].ToString();
-                        if (vlan == "")
-                        {
-                            d.Vlan = null;
-                        }
-                        else
-                        {
-                            d.Vlan = vlan;
-                        }
-                        d.Image = reader2["image"].ToString();
                     }
-
-
-                    c.Device = d;
-
-                    clients.Add(c);
                 }
-
             }
 
             return clients;
@@ -621,24 +399,93 @@ namespace up_network
 
         public User? GetUserByName(string username)
         {
-            using (connection = new SQLiteConnection(connectionString))
+            using (var connection = new SQLiteConnection(connectionString))
             {
                 connection.Open();
-                command = new SQLiteCommand();
+                var command = new SQLiteCommand();
                 command.Connection = connection;
                 command.CommandText = $@"SELECT login, password, user_roles.name as roleName FROM users INNER JOIN user_roles ON user_roles.id = users.id WHERE users.login = '{username}'";
 
-                var reader = command.ExecuteReader();
-                while (reader.Read())
+                using (command)
                 {
-                    User user = new User(
-                        u_login: reader["login"].ToString(),
-                        u_passwd: reader["password"].ToString(),
-                        role: reader["roleName"].ToString()
-                    );
-                    return user;
+                    using (var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            User user = new User(
+                                u_login: reader["login"].ToString(),
+                                u_passwd: reader["password"].ToString(),
+                                role: reader["roleName"].ToString()
+                            );
+                            return user;
+                        }
+                    }
                 }
                 return null;
+            }
+        }
+
+        public Device? InsertDevice(Device dev)
+        {
+            using (var connection = new SQLiteConnection(connectionString))
+            {
+                connection.Open();
+                var command = new SQLiteCommand();
+                command.Connection = connection;
+                command.CommandText = @$"INSERT INTO devices (name, description, status, mac, ip, vlan, lan_ports, wan_ports, console_ports, image) VALUES (@name, @desc, 0, @mac, @ip, @vlan, @lan, @wan, @console, @image)"; ;
+
+                using (command)
+                {
+                    command.Parameters.AddWithValue("@name", dev.Name);
+                    command.Parameters.AddWithValue("@desc", dev.Description);
+                    command.Parameters.AddWithValue("@mac", dev.Mac);
+                    command.Parameters.AddWithValue("@ip", dev.Ip);
+                    command.Parameters.AddWithValue("@vlan", dev.Vlan);
+                    command.Parameters.AddWithValue("@lan", dev.LanPorts);
+                    command.Parameters.AddWithValue("@wan", dev.WanPorts);
+                    command.Parameters.AddWithValue("@console", dev.ConsolePorts);
+                    command.Parameters.AddWithValue("@image", dev.Image);
+
+                    int result = command.ExecuteNonQuery();
+                    if (result > 0)
+                    {
+                        return dev;
+                    }
+                    return null;
+                }
+            }
+        }
+
+        public Device? UpdateDevice(Device dev, string oldMac)
+        {
+            using (var connection = new SQLiteConnection(connectionString))
+            {
+                connection.Open();
+                var command = new SQLiteCommand();
+                command.Connection = connection;
+                command.CommandText = $@"UPDATE devices SET name = @name, description = @desc, status = @status, mac = @mac, ip = @ip, vlan = @vlan, lan_ports = @lan, wan_ports = @wan, console_ports = @console, image = @image WHERE mac = @oldmac;";
+
+                using (command)
+                {
+                    command.Parameters.AddWithValue("oldmac", oldMac);
+                    command.Parameters.AddWithValue("name", dev.Name);
+                    command.Parameters.AddWithValue("desc", dev.Description);
+                    command.Parameters.AddWithValue("status", dev.Status);
+                    command.Parameters.AddWithValue("mac", dev.Mac);
+                    command.Parameters.AddWithValue("ip", dev.Ip);
+                    command.Parameters.AddWithValue("vlan", dev.Vlan);
+                    command.Parameters.AddWithValue("lan", dev.LanPorts);
+                    command.Parameters.AddWithValue("wan", dev.WanPorts);
+                    command.Parameters.AddWithValue("console", dev.ConsolePorts);
+                    command.Parameters.AddWithValue("image", dev.Image);
+
+                    int result = command.ExecuteNonQuery();
+                    if (result > 0)
+                    {
+                        return dev;
+                    }
+                    return null;
+                }
             }
         }
     }

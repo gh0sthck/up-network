@@ -37,6 +37,17 @@ namespace up_network
         private void MainPage_Load(object sender, EventArgs e)
         {
             MainUsername.Text = loggedUser.Login.ToString();
+            MainRoleText.Text = loggedUser.Role;
+
+            if (loggedUser.Role == "Администратор")
+            {
+                MainAddBtn.Visible = true;
+            }
+            if (loggedUser.Role == "Менеджер" || loggedUser.Role == "Администратор")
+            {
+                label5.Visible = true;
+                MainFilterBox.Visible = true;
+            }
 
             InsertDeviceList(db.GetAllDevicesByName());
 
@@ -62,7 +73,7 @@ namespace up_network
                 case "3": InsertDeviceList(db.GetStatusDevices()); break;
                 case "4": InsertDeviceList(db.GetStatusDevices(false)); break;
             }
-            
+
         }
 
         private void NavbarTableBg_MouseHover(object sender, EventArgs e)
@@ -98,6 +109,12 @@ namespace up_network
         private void NavbarClientsBg_Click(Object sender, EventArgs e)
         {
             onClientsClick?.Invoke();
+        }
+
+        private void MainAddBtn_Click(object sender, EventArgs e)
+        {
+            AddDevForm form = new AddDevForm();
+            form.Show();
         }
     }
 }
