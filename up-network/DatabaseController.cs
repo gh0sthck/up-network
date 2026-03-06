@@ -621,7 +621,25 @@ namespace up_network
 
         public User? GetUserByName(string username)
         {
-            return null;
+            using (connection = new SQLiteConnection(connectionString))
+            {
+                connection.Open();
+                command = new SQLiteCommand();
+                command.Connection = connection;
+                command.CommandText = $@"SELECT login, password, user_roles.name as roleName FROM users INNER JOIN user_roles ON user_roles.id = users.id WHERE users.login = '{username}'";
+
+                var reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    User user = new User(
+                        u_login: reader["login"].ToString(),
+                        u_passwd: reader["password"].ToString(),
+                        role: reader["roleName"].ToString()
+                    );
+                    return user;
+                }
+                return null;
+            }
         }
     }
 }

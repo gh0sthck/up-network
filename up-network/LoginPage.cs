@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualBasic.ApplicationServices;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -14,9 +15,11 @@ namespace up_network
         User currentUser;
         List<User> users = new List<User>();
         public event Action<User>? onAuth;
+        DatabaseController db;
 
         public LoginPage()
         {
+            db = new DatabaseController();
             InitializeComponent();
         }
 
@@ -38,7 +41,9 @@ namespace up_network
         {
             String enteredLogin = LoginLoginBox.Text.ToString();
             String enteredPassword = LoginPasswordBox.Text.ToString();
-            foreach (User user in users)
+
+            User? user = db.GetUserByName(enteredLogin);
+            if (user != null)
             {
                 if (user.Login == enteredLogin && user.Password == enteredPassword)
                 {
