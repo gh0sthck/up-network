@@ -61,20 +61,20 @@ namespace up_network
                         description: reader["description"].ToString(),
                         status: Boolean.Parse(reader["status"].ToString()),
                         mac: reader["mac"].ToString(),
-                        ip: reader["ip"]?.ToString(),
+                        ip: null,
                         lanPorts: int.Parse(reader["lan_ports"].ToString()),
                         wanPorts: int.Parse(reader["wan_ports"].ToString()),
                         consolePorts: int.Parse(reader["console_ports"].ToString()),
-                        vlan: reader["vlan"].ToString(),
+                        vlan: null,
                         image: reader["image"].ToString()
                     );
-            if (reader["ip"].ToString() == "")
+            if (!(reader["ip"] == DBNull.Value))
             {
-                d.Ip = null;
+                d.Ip = reader["ip"].ToString();
             }
-            if (reader["vlan"].ToString() == "")
+            if (!(reader["vlan"] == DBNull.Value))
             {
-                d.Vlan = null;
+                d.Vlan = reader["vlan"].ToString();
             }
             return d;
         }

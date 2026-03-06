@@ -189,7 +189,7 @@
             Controls.Add(EditFormMAC);
             Controls.Add(EditFormName);
             Name = "AddDevForm";
-            Text = "Изменение устройства";
+            Text = "Добавление устройства";
             Load += AddDevForm_Load;
             ((System.ComponentModel.ISupportInitialize)EditFormLan).EndInit();
             ((System.ComponentModel.ISupportInitialize)EditFormWan).EndInit();

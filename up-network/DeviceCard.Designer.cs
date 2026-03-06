@@ -45,6 +45,7 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(276, 197);
             panel1.TabIndex = 0;
+            panel1.Click += DeviceCard_Click;
             // 
             // DevCardName
             // 
@@ -132,6 +133,7 @@
             Name = "DeviceCard";
             Size = new Size(310, 380);
             Load += DeviceCard_Load;
+            Click += DeviceCard_Click;
             ResumeLayout(false);
             PerformLayout();
         }

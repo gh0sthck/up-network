@@ -12,6 +12,7 @@ namespace up_network
     public partial class DeviceCard : UserControl
     {
         public Device currentDevice;
+        public event Action onClick;
 
         public DeviceCard()
         {
@@ -51,6 +52,11 @@ namespace up_network
                 DevCardStatus.Text = "Не подключено";
                 DevCardStatus.ForeColor = Color.Red;
             }
+        }
+
+        private void DeviceCard_Click(object sender, EventArgs e)
+        {
+            onClick?.Invoke();
         }
     }
 }

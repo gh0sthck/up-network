@@ -30,6 +30,13 @@ namespace up_network
             {
                 var card = new DeviceCard();
                 card.currentDevice = device;
+                card?.onClick += () => 
+                {
+                    if (loggedUser.Role == "Администратор")
+                    {
+                        Card_Click(device);
+                    }
+                };
                 MainFlowLayout.Controls.Add(card);
             }
         }
@@ -75,7 +82,11 @@ namespace up_network
             }
 
         }
-
+        private void Card_Click(Device dev)
+        {
+            UpdateDevForm form = new UpdateDevForm(dev);
+            form.Show();
+        }
         private void NavbarTableBg_MouseHover(object sender, EventArgs e)
         {
             NavbarTableBg.BackColor = Color.FromArgb(68, 155, 251);

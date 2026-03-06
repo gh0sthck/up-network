@@ -45,6 +45,7 @@ namespace up_network
                 status: false,
                 mac: mac,
                 ip: ip,
+                vlan: vlan,
                 lanPorts: lan,
                 wanPorts: wan,
                 consolePorts: console,
