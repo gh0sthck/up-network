@@ -80,5 +80,20 @@ namespace up_network
             }
             this.Close();
         }
+
+        private void EditFormDelete_Click(object sender, EventArgs e)
+        {
+            DialogResult choice = MessageBox.Show($"Вы точно хотите удалить {editingDevice.Name}?", "Удаление", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (choice == DialogResult.Yes)
+            {
+                bool st = db.DeleteDevice(editingDevice.Mac);
+                if (st)
+                {
+                    MessageBox.Show("Устройство удалено");
+                    this.Close();
+                }
+            }
+        }
     }
 }

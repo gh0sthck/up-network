@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.SQLite;
-using System.Diagnostics.Contracts;
-using System.Security.Cryptography;
-using System.Text;
-using static System.ComponentModel.Design.ObjectSelectorEditor;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+﻿using System.Data.SQLite;
 
 namespace up_network
 {
@@ -16,7 +9,6 @@ namespace up_network
         public DatabaseController() 
         {
             connectionString = $"Data Source = " + Environment.CurrentDirectory + @"\data.db; Version = 3;";
-            
         }
 
         private List<Device> GetFoobarDevices()
@@ -486,6 +478,28 @@ namespace up_network
                         return dev;
                     }
                     return null;
+                }
+            }
+        }
+
+        public bool DeleteDevice(string mac)
+        {
+            using (var connection = new SQLiteConnection(connectionString))
+            {
+                connection.Open();
+                var command = new SQLiteCommand();
+                command.Connection = connection;
+                command.CommandText = "DELETE FROM devices WHERE mac = @mac;";
+                using (command)
+                {
+                    command.Parameters.AddWithValue("@mac", mac);
+
+                    int result = command.ExecuteNonQuery();
+                    if (result > 0)
+                    {
+                        return true;
+                    }
+                    return false;
                 }
             }
         }

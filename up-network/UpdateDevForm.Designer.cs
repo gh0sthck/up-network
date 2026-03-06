@@ -42,6 +42,7 @@
             EditFormMAC = new TextBox();
             EditFormName = new TextBox();
             EditFormConnected = new CheckBox();
+            EditFormDelete = new Button();
             ((System.ComponentModel.ISupportInitialize)EditFormConsole).BeginInit();
             ((System.ComponentModel.ISupportInitialize)EditFormWan).BeginInit();
             ((System.ComponentModel.ISupportInitialize)EditFormLan).BeginInit();
@@ -181,12 +182,27 @@
             EditFormConnected.Text = "Подключено";
             EditFormConnected.UseVisualStyleBackColor = true;
             // 
+            // EditFormDelete
+            // 
+            EditFormDelete.BackColor = Color.IndianRed;
+            EditFormDelete.FlatStyle = FlatStyle.Flat;
+            EditFormDelete.Font = new Font("Geometria", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            EditFormDelete.ForeColor = SystemColors.ButtonHighlight;
+            EditFormDelete.Location = new Point(276, 580);
+            EditFormDelete.Name = "EditFormDelete";
+            EditFormDelete.Size = new Size(195, 31);
+            EditFormDelete.TabIndex = 27;
+            EditFormDelete.Text = "Удалить";
+            EditFormDelete.UseVisualStyleBackColor = false;
+            EditFormDelete.Click += EditFormDelete_Click;
+            // 
             // UpdateDevForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
             ClientSize = new Size(516, 739);
+            Controls.Add(EditFormDelete);
             Controls.Add(EditFormConnected);
             Controls.Add(EditFormImage);
             Controls.Add(EditFormBtn);
@@ -227,5 +243,6 @@
         private TextBox EditFormMAC;
         private TextBox EditFormName;
         private CheckBox EditFormConnected;
+        private Button EditFormDelete;
     }
 }
