@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             panel1 = new Panel();
+            DevCardPicture = new PictureBox();
             DevCardName = new Label();
             DevCardDesc = new Label();
             label3 = new Label();
@@ -36,16 +37,29 @@
             DevCardStatus = new Label();
             DevCardMAC = new Label();
             DevCardIP = new Label();
+            panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)DevCardPicture).BeginInit();
             SuspendLayout();
             // 
             // panel1
             // 
             panel1.BackColor = Color.FromArgb(255, 128, 0);
+            panel1.Controls.Add(DevCardPicture);
             panel1.Location = new Point(21, 15);
             panel1.Name = "panel1";
             panel1.Size = new Size(276, 197);
             panel1.TabIndex = 0;
             panel1.Click += DeviceCard_Click;
+            // 
+            // DevCardPicture
+            // 
+            DevCardPicture.Location = new Point(0, 0);
+            DevCardPicture.Name = "DevCardPicture";
+            DevCardPicture.Size = new Size(276, 197);
+            DevCardPicture.SizeMode = PictureBoxSizeMode.StretchImage;
+            DevCardPicture.TabIndex = 0;
+            DevCardPicture.TabStop = false;
+            DevCardPicture.Click += DeviceCard_Click;
             // 
             // DevCardName
             // 
@@ -134,6 +148,8 @@
             Size = new Size(310, 380);
             Load += DeviceCard_Load;
             Click += DeviceCard_Click;
+            panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)DevCardPicture).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -148,5 +164,6 @@
         private Label DevCardStatus;
         private Label DevCardMAC;
         private Label DevCardIP;
+        private PictureBox DevCardPicture;
     }
 }

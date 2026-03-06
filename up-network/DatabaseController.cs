@@ -217,7 +217,7 @@ namespace up_network
             {
                 connection.Open();
                 var command = new SQLiteCommand();
-                command.CommandText = @$"SELECT clients.name as cliName, companies.name, clients.contract, devices.name, devices.description, devices.status, devices.mac, devices.ip, devices.lan_ports, devices.wan_ports, devices.console_ports, devices.vlan, devices.image FROM clients  INNER JOIN  devices ON clients.device_id = devices.id  INNER JOIN companies ON clients.company_id = companies.id;";
+                command.CommandText = @$"SELECT clients.name as cliName, companies.name as CompName, clients.contract, devices.name, devices.description, devices.status, devices.mac, devices.ip, devices.lan_ports, devices.wan_ports, devices.console_ports, devices.vlan, devices.image FROM clients  INNER JOIN  devices ON clients.device_id = devices.id  INNER JOIN companies ON clients.company_id = companies.id;";
                 command.Connection = connection;
 
                 using (command)
@@ -228,10 +228,11 @@ namespace up_network
                         {
                             Client c = new Client(
                                 name: reader["cliName"].ToString(),
-                                company: reader["name"].ToString(),
+                                company: reader["CompName"].ToString(),
                                 contractNumber: reader["contract"].ToString(),
                                 dev: GetDeviceFromReader(reader)
                             );
+                            
                             clients.Add(c);
                         }
                     }
@@ -249,7 +250,7 @@ namespace up_network
             {
                 connection.Open();
                 var command = new SQLiteCommand();
-                command.CommandText = @$"SELECT clients.name as cliName, companies.name, clients.contract, devices.name, devices.description, devices.status, devices.mac, devices.ip, devices.lan_ports, devices.wan_ports, devices.console_ports, devices.vlan, devices.image FROM clients  INNER JOIN  devices ON clients.device_id = devices.id  INNER JOIN companies ON clients.company_id = companies.id WHERE companies.name = '{company}';";
+                command.CommandText = @$"SELECT clients.name as cliName, companies.name as CompName, clients.contract, devices.name, devices.description, devices.status, devices.mac, devices.ip, devices.lan_ports, devices.wan_ports, devices.console_ports, devices.vlan, devices.image FROM clients  INNER JOIN  devices ON clients.device_id = devices.id  INNER JOIN companies ON clients.company_id = companies.id WHERE companies.name = '{company}';";
                 command.Connection = connection;
 
                 using (command)
@@ -260,7 +261,7 @@ namespace up_network
                         {
                             Client c = new Client(
                                 name: reader["cliName"].ToString(),
-                                company: reader["name"].ToString(),
+                                company: reader["CompName"].ToString(),
                                 contractNumber: reader["contract"].ToString(),
                                 dev: GetDeviceFromReader(reader)
                             );
@@ -281,7 +282,7 @@ namespace up_network
             {
                 connection.Open();
                 var command = new SQLiteCommand();
-                command.CommandText = @$"SELECT clients.name as cliName, companies.name, clients.contract, devices.name, devices.description, devices.status, devices.mac, devices.ip, devices.lan_ports, devices.wan_ports, devices.console_ports, devices.vlan, devices.image FROM clients  INNER JOIN  devices ON clients.device_id = devices.id  INNER JOIN companies ON clients.company_id = companies.id WHERE contract = '{contract}';";
+                command.CommandText = @$"SELECT clients.name as cliName, companies.name as CompName, clients.contract, devices.name, devices.description, devices.status, devices.mac, devices.ip, devices.lan_ports, devices.wan_ports, devices.console_ports, devices.vlan, devices.image FROM clients  INNER JOIN  devices ON clients.device_id = devices.id  INNER JOIN companies ON clients.company_id = companies.id WHERE contract = '{contract}';";
                 command.Connection = connection;
 
                 using (command)
@@ -292,7 +293,7 @@ namespace up_network
                         {
                             Client c = new Client(
                                 name: reader["cliName"].ToString(),
-                                company: reader["name"].ToString(),
+                                company: reader["CompName"].ToString(),
                                 contractNumber: reader["contract"].ToString(),
                                 dev: GetDeviceFromReader(reader)
                             );
@@ -313,7 +314,7 @@ namespace up_network
             {
                 connection.Open();
                 var command = new SQLiteCommand();
-                command.CommandText = @$"SELECT clients.name as cliName, companies.name, clients.contract, devices.name, devices.description, devices.status, devices.mac, devices.ip, devices.lan_ports, devices.wan_ports, devices.console_ports, devices.vlan, devices.image FROM clients  INNER JOIN  devices ON clients.device_id = devices.id  INNER JOIN companies ON clients.company_id = companies.id  WHERE devices.name = '{devName}';";
+                command.CommandText = @$"SELECT clients.name as cliName, companies.name as CompName, clients.contract, devices.name, devices.description, devices.status, devices.mac, devices.ip, devices.lan_ports, devices.wan_ports, devices.console_ports, devices.vlan, devices.image FROM clients  INNER JOIN  devices ON clients.device_id = devices.id  INNER JOIN companies ON clients.company_id = companies.id  WHERE devices.name = '{devName}';";
                 command.Connection = connection;
 
                 using (command)
@@ -324,7 +325,7 @@ namespace up_network
                         {
                             Client c = new Client(
                                 name: reader["cliName"].ToString(),
-                                company: reader["name"].ToString(),
+                                company: reader["CompName"].ToString(),
                                 contractNumber: reader["contract"].ToString(),
                                 dev: GetDeviceFromReader(reader)
                             );

@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             panel1 = new Panel();
-            MainExitButton = new Button();
             NavbarClientsBg = new Panel();
             label4 = new Label();
             NavbarTableBg = new Panel();
@@ -40,6 +39,9 @@
             MainUsername = new Label();
             TableFlowLayout = new FlowLayoutPanel();
             TableVlanFilter = new ComboBox();
+            label5 = new Label();
+            MainRoleText = new Label();
+            button1 = new Button();
             panel1.SuspendLayout();
             NavbarClientsBg.SuspendLayout();
             NavbarTableBg.SuspendLayout();
@@ -49,7 +51,8 @@
             // panel1
             // 
             panel1.BackColor = Color.FromArgb(100, 171, 251);
-            panel1.Controls.Add(MainExitButton);
+            panel1.Controls.Add(MainRoleText);
+            panel1.Controls.Add(button1);
             panel1.Controls.Add(NavbarClientsBg);
             panel1.Controls.Add(NavbarTableBg);
             panel1.Controls.Add(NavbarMainBg);
@@ -59,16 +62,6 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(262, 711);
             panel1.TabIndex = 1;
-            // 
-            // MainExitButton
-            // 
-            MainExitButton.Location = new Point(25, 676);
-            MainExitButton.Name = "MainExitButton";
-            MainExitButton.Size = new Size(195, 23);
-            MainExitButton.TabIndex = 6;
-            MainExitButton.Text = "Выход";
-            MainExitButton.UseVisualStyleBackColor = true;
-            MainExitButton.Click += MainExitButton_Click;
             // 
             // NavbarClientsBg
             // 
@@ -158,7 +151,7 @@
             MainUsername.AutoSize = true;
             MainUsername.Font = new Font("Geometria", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             MainUsername.ForeColor = Color.White;
-            MainUsername.Location = new Point(25, 643);
+            MainUsername.Location = new Point(25, 600);
             MainUsername.Name = "MainUsername";
             MainUsername.Size = new Size(195, 20);
             MainUsername.TabIndex = 0;
@@ -177,16 +170,49 @@
             // 
             // TableVlanFilter
             // 
+            TableVlanFilter.Font = new Font("Geometria", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 204);
             TableVlanFilter.FormattingEnabled = true;
-            TableVlanFilter.Location = new Point(706, 57);
+            TableVlanFilter.Location = new Point(789, 53);
             TableVlanFilter.Name = "TableVlanFilter";
-            TableVlanFilter.Size = new Size(192, 23);
+            TableVlanFilter.Size = new Size(192, 28);
             TableVlanFilter.TabIndex = 3;
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Font = new Font("Geometria", 14.2499981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label5.Location = new Point(704, 57);
+            label5.Name = "label5";
+            label5.Size = new Size(68, 24);
+            label5.TabIndex = 4;
+            label5.Text = "VLAN:";
+            // 
+            // MainRoleText
+            // 
+            MainRoleText.AutoSize = true;
+            MainRoleText.Font = new Font("Geometria", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            MainRoleText.ForeColor = Color.White;
+            MainRoleText.Location = new Point(25, 633);
+            MainRoleText.Name = "MainRoleText";
+            MainRoleText.Size = new Size(129, 20);
+            MainRoleText.TabIndex = 9;
+            MainRoleText.Text = "(Administrator)";
+            // 
+            // button1
+            // 
+            button1.Font = new Font("Geometria", 11.2499981F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            button1.Location = new Point(25, 667);
+            button1.Name = "button1";
+            button1.Size = new Size(195, 32);
+            button1.TabIndex = 8;
+            button1.Text = "Выход";
+            button1.UseVisualStyleBackColor = true;
             // 
             // TablePage
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(label5);
             Controls.Add(TableVlanFilter);
             Controls.Add(TableFlowLayout);
             Controls.Add(panel1);
@@ -202,12 +228,12 @@
             NavbarMainBg.ResumeLayout(false);
             NavbarMainBg.PerformLayout();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
 
         private Panel panel1;
-        private Button MainExitButton;
         private Panel NavbarClientsBg;
         private Label label4;
         private Panel NavbarTableBg;
@@ -218,5 +244,8 @@
         private Label MainUsername;
         private FlowLayoutPanel TableFlowLayout;
         private ComboBox TableVlanFilter;
+        private Label label5;
+        private Label MainRoleText;
+        private Button button1;
     }
 }

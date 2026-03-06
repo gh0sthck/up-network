@@ -69,6 +69,7 @@ namespace up_network
         private void ClientsPage_Load(object sender, EventArgs e)
         {
             MainUsername.Text = loggedUser.Login.ToString();
+            MainRoleText.Text = loggedUser.Role;
 
             ClientsDeviceFilter.Items.Add("Все устройтсва");
             foreach (string val in db.GetUniqueDevicesName())

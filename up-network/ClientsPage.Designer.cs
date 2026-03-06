@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             panel1 = new Panel();
-            MainExitButton = new Button();
             NavbarClientsBg = new Panel();
             label4 = new Label();
             NavbarTableBg = new Panel();
@@ -42,6 +41,8 @@
             ClientsNameFilter = new ComboBox();
             ClientsContractFilter = new ComboBox();
             ClientsDeviceFilter = new ComboBox();
+            MainRoleText = new Label();
+            button1 = new Button();
             panel1.SuspendLayout();
             NavbarClientsBg.SuspendLayout();
             NavbarTableBg.SuspendLayout();
@@ -51,7 +52,8 @@
             // panel1
             // 
             panel1.BackColor = Color.FromArgb(100, 171, 251);
-            panel1.Controls.Add(MainExitButton);
+            panel1.Controls.Add(MainRoleText);
+            panel1.Controls.Add(button1);
             panel1.Controls.Add(NavbarClientsBg);
             panel1.Controls.Add(NavbarTableBg);
             panel1.Controls.Add(NavbarDevicesBg);
@@ -61,16 +63,6 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(262, 711);
             panel1.TabIndex = 1;
-            // 
-            // MainExitButton
-            // 
-            MainExitButton.Location = new Point(25, 676);
-            MainExitButton.Name = "MainExitButton";
-            MainExitButton.Size = new Size(195, 23);
-            MainExitButton.TabIndex = 6;
-            MainExitButton.Text = "Выход";
-            MainExitButton.UseVisualStyleBackColor = true;
-            MainExitButton.Click += MainExitButton_Click;
             // 
             // NavbarClientsBg
             // 
@@ -160,7 +152,7 @@
             MainUsername.AutoSize = true;
             MainUsername.Font = new Font("Geometria", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
             MainUsername.ForeColor = Color.White;
-            MainUsername.Location = new Point(25, 643);
+            MainUsername.Location = new Point(25, 600);
             MainUsername.Name = "MainUsername";
             MainUsername.Size = new Size(195, 20);
             MainUsername.TabIndex = 0;
@@ -179,27 +171,51 @@
             // 
             // ClientsNameFilter
             // 
+            ClientsNameFilter.Font = new Font("Geometria", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 204);
             ClientsNameFilter.FormattingEnabled = true;
-            ClientsNameFilter.Location = new Point(317, 40);
+            ClientsNameFilter.Location = new Point(316, 35);
             ClientsNameFilter.Name = "ClientsNameFilter";
-            ClientsNameFilter.Size = new Size(157, 23);
+            ClientsNameFilter.Size = new Size(157, 28);
             ClientsNameFilter.TabIndex = 3;
             // 
             // ClientsContractFilter
             // 
+            ClientsContractFilter.Font = new Font("Geometria", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 204);
             ClientsContractFilter.FormattingEnabled = true;
-            ClientsContractFilter.Location = new Point(868, 40);
+            ClientsContractFilter.Location = new Point(799, 35);
             ClientsContractFilter.Name = "ClientsContractFilter";
-            ClientsContractFilter.Size = new Size(157, 23);
+            ClientsContractFilter.Size = new Size(157, 28);
             ClientsContractFilter.TabIndex = 4;
             // 
             // ClientsDeviceFilter
             // 
+            ClientsDeviceFilter.Font = new Font("Geometria", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 204);
             ClientsDeviceFilter.FormattingEnabled = true;
-            ClientsDeviceFilter.Location = new Point(1058, 40);
+            ClientsDeviceFilter.Location = new Point(1011, 35);
             ClientsDeviceFilter.Name = "ClientsDeviceFilter";
-            ClientsDeviceFilter.Size = new Size(157, 23);
+            ClientsDeviceFilter.Size = new Size(157, 28);
             ClientsDeviceFilter.TabIndex = 5;
+            // 
+            // MainRoleText
+            // 
+            MainRoleText.AutoSize = true;
+            MainRoleText.Font = new Font("Geometria", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            MainRoleText.ForeColor = Color.White;
+            MainRoleText.Location = new Point(25, 633);
+            MainRoleText.Name = "MainRoleText";
+            MainRoleText.Size = new Size(129, 20);
+            MainRoleText.TabIndex = 9;
+            MainRoleText.Text = "(Administrator)";
+            // 
+            // button1
+            // 
+            button1.Font = new Font("Geometria", 11.2499981F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            button1.Location = new Point(25, 667);
+            button1.Name = "button1";
+            button1.Size = new Size(195, 32);
+            button1.TabIndex = 8;
+            button1.Text = "Выход";
+            button1.UseVisualStyleBackColor = true;
             // 
             // ClientsPage
             // 
@@ -227,7 +243,6 @@
         #endregion
 
         private Panel panel1;
-        private Button MainExitButton;
         private Panel NavbarClientsBg;
         private Label label4;
         private Panel NavbarTableBg;
@@ -240,5 +255,7 @@
         private ComboBox ClientsNameFilter;
         private ComboBox ClientsContractFilter;
         private ComboBox ClientsDeviceFilter;
+        private Label MainRoleText;
+        private Button button1;
     }
 }

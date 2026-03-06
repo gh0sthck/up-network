@@ -32,11 +32,15 @@ namespace up_network
 
             this.Region = new Region(path);
 
-
             DevCardName.Text = currentDevice.Name;
             DevCardDesc.Text = currentDevice.Description;
             DevCardMAC.Text = currentDevice.Mac;
             DevCardIP.Text = "Не зарезервирован";
+            DevCardPicture.Image = Image.FromFile("default.png");
+            if (currentDevice.Image != "" && File.Exists(currentDevice.Image))
+            {
+                DevCardPicture.Image = Image.FromFile(currentDevice.Image);
+            }
             if (currentDevice.Ip != null)
             {
                 DevCardIP.Text = currentDevice.Ip;

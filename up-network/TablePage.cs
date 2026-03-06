@@ -70,6 +70,7 @@ namespace up_network
         private void TablePage_Load(object sender, EventArgs e)
         {
             MainUsername.Text = loggedUser.Login.ToString();
+            MainRoleText.Text = loggedUser.Role;
 
             TableVlanFilter.Items.Add("Все");
             foreach (string val in db.GetVlanList())

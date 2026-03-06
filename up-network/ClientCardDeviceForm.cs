@@ -23,6 +23,15 @@ namespace up_network
             DeviceFormMAC.Text = device.Mac.ToString();
             DeviceFormIP.Text = device.Ip?.ToString();
             DeviceFormDesc.Text = device.Description.ToString();
+
+            DeviceFormPicture.Image = Image.FromFile("default.png");
+            if (device.Image != "" && File.Exists(device.Image))
+            {
+                DeviceFormPicture.Image = Image.FromFile(device.Image);
+            }
+
+            DeviceFormPorts.Text = $"{device.LanPorts}/{device.WanPorts}/{device.ConsolePorts}";
+
             if (device.Status)
             {
                 DeviceFormStatus.Text = "Подключено";
